@@ -1,0 +1,4685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#FAFBFC">
+<title>BWM GTM Dashboard · UltraTech Building Products Division</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #FAFBFC;
+    --surface: #FFFFFF;
+    --surface-2: #F5F8F9;
+    --text: #1A2226;
+    --text-muted: #6B7A80;
+    --text-faint: #94A0A6;
+    --border: rgba(0,0,0,0.08);
+    --border-strong: rgba(0,0,0,0.15);
+    --coral-fill: #FAECE7;
+    --coral-title: #712B13;
+    --coral-sub: #993C1D;
+    --teal-fill: #E1F5EE;
+    --teal-title: #085041;
+    --teal-sub: #0F6E56;
+    --purple-fill: #EEEDFE;
+    --purple-title: #26215C;
+    --purple-sub: #3C3489;
+    --amber-fill: #FAEEDA;
+    --amber-title: #412402;
+    --amber-sub: #633806;
+    --accent-coral: #FF6B5B;
+    --ut-yellow: #FFD60A;
+    --ut-yellow-soft: #FFF6B8;
+    --ut-yellow-deep: #B8860B;
+    --shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04);
+    --shadow-hover: 0 2px 6px rgba(0,0,0,0.06), 0 12px 28px rgba(0,0,0,0.08);
+  }
+
+  html, body {
+    width: 100%;
+    min-height: 100vh;
+    background: var(--bg);
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Allow touch scrolling inside scrollable regions */
+  body { overflow-x: hidden; }
+
+  .stage {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 48px 40px 40px;
+    overflow-x: hidden;
+  }
+
+  /* SHARED HEADER */
+  .header-block {
+    margin-bottom: 28px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .header-left { flex: 1; min-width: 320px; }
+
+  .eyebrow {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .eyebrow::before {
+    content: "";
+    display: inline-block;
+    width: 28px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--ut-yellow) 0%, var(--ut-yellow) 50%, var(--accent-coral) 50%, var(--accent-coral) 100%);
+    border-radius: 1px;
+  }
+
+  .h1 {
+    font-size: 36px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+
+  .lede {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.55;
+    max-width: 720px;
+  }
+
+  .header-meta {
+    text-align: right;
+    font-size: 12px;
+    color: var(--text-faint);
+    line-height: 1.6;
+  }
+  .header-meta strong { color: var(--text-muted); font-weight: 600; }
+
+  
+  /* === ADITYA BIRLA / ULTRATECH BRAND LOGO === */
+  .header-brand-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .brand-logo {
+    width: 140px;
+    height: auto;
+    flex-shrink: 0;
+  }
+  .header-brand-row .eyebrow { margin-bottom: 0; }
+  @media (max-width: 640px) {
+    .brand-logo { width: 120px; }
+    .header-brand-row { gap: 10px; margin-bottom: 10px; }
+  }
+
+  /* ====== TOP-LEVEL MODE SWITCHER ====== */
+  .mode-switcher {
+    display: inline-flex;
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 14px;
+    padding: 5px;
+    margin-bottom: 28px;
+    box-shadow: var(--shadow);
+  }
+  .mode-btn {
+    all: unset;
+    cursor: pointer;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    transition: background 0.18s ease, color 0.18s ease, transform 0.1s ease;
+    white-space: nowrap;
+    letter-spacing: -0.005em;
+  }
+  .mode-btn:hover { color: var(--text); }
+  .mode-btn:active { transform: scale(0.98); }
+  .mode-btn.active {
+    background: var(--text);
+    color: var(--surface);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  }
+  .mode-btn.active i { color: var(--surface); }
+  .mode-btn i { font-size: 17px; }
+  .mode-btn .count-pill {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.18);
+    color: inherit;
+    margin-left: 4px;
+    letter-spacing: 0.02em;
+    opacity: 0.85;
+  }
+  .mode-btn.active .count-pill {
+    background: var(--ut-yellow);
+    color: var(--text);
+    opacity: 1;
+  }
+  .mode-btn:not(.active) .count-pill {
+    background: var(--surface-2);
+    color: var(--text-faint);
+  }
+
+  /* ====== MODE PANELS ====== */
+  .mode-panel { display: none; }
+  .mode-panel.active { display: block; }
+
+  /* ============================================ */
+  /* ============ VALUE PROPS STYLES ============ */
+  /* ============================================ */
+
+  /* Inner tab bar (Value Props audiences) */
+  .vp-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 24px;
+    padding: 4px;
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    overflow-x: auto;
+  }
+  .vp-tab {
+    all: unset;
+    cursor: pointer;
+    flex: 1;
+    min-width: 130px;
+    padding: 11px 14px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    border-radius: 8px;
+    transition: background 0.15s ease, color 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    white-space: nowrap;
+  }
+  .vp-tab:hover { color: var(--text); }
+  .vp-tab.active {
+    background: var(--text);
+    color: var(--surface);
+  }
+  .vp-tab.active i { color: var(--surface); }
+  .vp-tab i { font-size: 16px; }
+
+  .vp-panel { display: none; }
+  .vp-panel.active { display: block; }
+
+  /* Universal cards view */
+  .legend {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 24px;
+    padding: 14px 18px;
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+  }
+  .legend-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text);
+  }
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .legend-dot.coral { background: var(--coral-title); }
+  .legend-dot.teal { background: var(--teal-title); }
+  .legend-dot.purple { background: var(--purple-title); }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .card {
+    all: unset;
+    cursor: pointer;
+    box-sizing: border-box;
+    border-radius: 14px;
+    padding: 22px 22px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-height: 200px;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    border: 1.5px solid transparent;
+    box-shadow: var(--shadow);
+    position: relative;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+  }
+  .card:focus-visible {
+    outline: 2px solid var(--accent-coral);
+    outline-offset: 2px;
+  }
+  .card.active {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .card-num {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    font-variant-numeric: tabular-nums;
+  }
+  .card-name {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .card-headline {
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 1.25;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+  .card-tagline {
+    font-size: 13.5px;
+    line-height: 1.45;
+  }
+
+  .detail-panel {
+    background: var(--surface);
+    border-radius: 12px;
+    border: 0.5px solid var(--border);
+    border-left: 3px solid var(--accent-coral);
+    padding: 24px 28px;
+    min-height: 120px;
+    transition: border-left-color 0.25s ease;
+  }
+  .detail-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .detail-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .detail-text {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text);
+  }
+  .detail-empty {
+    font-size: 14px;
+    color: var(--text-muted);
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  /* Audience playbook */
+  .audience-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 24px 28px;
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 14px;
+    margin-bottom: 22px;
+  }
+  .audience-icon-circle {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .audience-icon-circle i { font-size: 28px; }
+  .audience-meta { flex: 1; }
+  .audience-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .audience-title {
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.1;
+    color: var(--text);
+  }
+  .audience-anchor {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.55;
+    margin-top: 6px;
+    font-style: italic;
+  }
+
+  .layer-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 28px 0 14px;
+  }
+  .layer-num {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+  .layer-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .prop-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .prop-item {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 22px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .prop-item:hover {
+    border-color: rgba(0,0,0,0.15);
+    box-shadow: var(--shadow);
+  }
+  .prop-item.from-universal { border-left: 3px solid; }
+  .prop-item.tailored {
+    border-left: 3px solid var(--accent-coral);
+    background: linear-gradient(180deg, #FFFFFF 0%, #FFF9F8 100%);
+  }
+  .prop-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+  }
+  .prop-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.005em;
+  }
+  .prop-source {
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 999px;
+    flex-shrink: 0;
+  }
+  .prop-source.universal {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    color: var(--text-muted);
+  }
+  .prop-source.tailored {
+    background: var(--coral-fill);
+    color: var(--coral-title);
+  }
+  .prop-body {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text);
+  }
+
+  /* Universal controls */
+  .controls-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+  .control-meta {
+    font-size: 12px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .keyboard-hints {
+    font-size: 11px;
+    color: var(--text-faint);
+  }
+  .keyboard-hints kbd {
+    display: inline-block;
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 6px;
+    margin: 0 2px;
+    font-family: inherit;
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+  .control-btn {
+    all: unset;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    padding: 8px 14px;
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.15s ease, border-color 0.15s ease;
+  }
+  .control-btn:hover {
+    background: var(--surface-2);
+    border-color: var(--border-strong);
+  }
+  .control-btn:active { transform: scale(0.98); }
+
+  /* ============================================ */
+  /* ============== FAQ STYLES ================== */
+  /* ============================================ */
+
+  /* FAQ search row */
+  .faq-search-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .faq-search-box {
+    flex: 1;
+    min-width: 280px;
+    position: relative;
+  }
+  .faq-search-box i.search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: var(--text-faint);
+    pointer-events: none;
+  }
+  .faq-search-box input {
+    width: 100%;
+    height: 42px;
+    padding: 0 14px 0 40px;
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .faq-search-box input:focus {
+    border-color: var(--text);
+    box-shadow: 0 0 0 3px rgba(0,0,0,0.04);
+  }
+  .faq-search-box input::placeholder { color: var(--text-faint); }
+  .faq-search-clear {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: none;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    background: transparent;
+    border: none;
+    color: var(--text-faint);
+  }
+  .faq-search-clear:hover { color: var(--text); background: var(--surface-2); }
+  .faq-search-clear.visible { display: block; }
+  .faq-search-stats {
+    font-size: 12px;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .faq-view-toggle {
+    display: inline-flex;
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .faq-view-btn {
+    all: unset;
+    cursor: pointer;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.15s ease;
+  }
+  .faq-view-btn.active {
+    background: var(--text);
+    color: var(--surface);
+  }
+  .faq-view-btn:hover:not(.active) { background: var(--surface-2); }
+  .faq-view-btn i { font-size: 14px; }
+
+  /* FAQ layout */
+  .faq-layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+
+  /* FAQ sidebar */
+  .faq-sidebar {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    padding: 8px;
+    position: sticky;
+    top: 20px;
+    max-height: calc(100vh - 60px);
+    overflow-y: auto;
+  }
+  .faq-sidebar::-webkit-scrollbar { width: 6px; }
+  .faq-sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  .faq-section-group { margin-bottom: 4px; }
+
+  .faq-section-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .faq-section-header i { font-size: 14px; }
+  .faq-section-header .count {
+    margin-left: auto;
+    font-size: 10px;
+    background: var(--surface-2);
+    padding: 2px 7px;
+    border-radius: 999px;
+    color: var(--text-muted);
+    letter-spacing: normal;
+    text-transform: none;
+    font-weight: 500;
+  }
+
+  .faq-question-item {
+    all: unset;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 9px 12px;
+    margin-bottom: 1px;
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.4;
+    transition: background 0.12s ease, color 0.12s ease;
+  }
+  .faq-question-item:hover {
+    background: var(--surface-2);
+  }
+  .faq-question-item.active {
+    background: var(--text);
+    color: var(--surface);
+  }
+  .faq-question-item.active .q-num { color: var(--surface); opacity: 0.7; }
+  .faq-question-item.hidden { display: none; }
+  .q-num {
+    flex-shrink: 0;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    min-width: 24px;
+    font-variant-numeric: tabular-nums;
+    padding-top: 1px;
+  }
+  .q-text { flex: 1; }
+
+  /* FAQ reading pane */
+  .faq-reading-pane {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    padding: 36px 44px 36px;
+    min-height: 520px;
+  }
+
+  .reading-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+  .meta-pill {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--surface-2);
+    color: var(--text-muted);
+  }
+  .meta-pill.section {
+    background: var(--teal-fill);
+    color: var(--teal-title);
+  }
+  .meta-pill.tbd {
+    background: var(--coral-fill);
+    color: var(--coral-title);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .question-title {
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    color: var(--text);
+    margin-bottom: 22px;
+  }
+
+  .answer-body {
+    font-size: 15.5px;
+    line-height: 1.75;
+    color: var(--text);
+  }
+  .answer-body p { margin-bottom: 14px; }
+  .answer-body p:last-child { margin-bottom: 0; }
+  .answer-body ul, .answer-body ol {
+    padding-left: 22px;
+    margin-bottom: 14px;
+  }
+  .answer-body li { margin-bottom: 8px; line-height: 1.65; }
+  .answer-body li:last-child { margin-bottom: 0; }
+  .answer-body strong { font-weight: 600; }
+  .answer-body code {
+    font-family: 'SF Mono', Menlo, Monaco, Consolas, monospace;
+    font-size: 14px;
+    background: var(--surface-2);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  /* Spec table */
+  .spec-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .spec-table th {
+    text-align: left;
+    padding: 10px 14px;
+    background: var(--surface-2);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .spec-table td {
+    padding: 11px 14px;
+    border-bottom: 0.5px solid var(--border);
+    vertical-align: top;
+  }
+  .spec-table tr:last-child td { border-bottom: none; }
+  .spec-table .spec-name { font-weight: 500; color: var(--text); }
+  .spec-table .spec-value { color: var(--text); font-variant-numeric: tabular-nums; }
+  .spec-table .spec-standard {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: 'SF Mono', Menlo, Monaco, Consolas, monospace;
+  }
+
+  /* Step list */
+  .step-list {
+    margin: 16px 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: step;
+  }
+  .step-list li {
+    counter-increment: step;
+    position: relative;
+    padding: 12px 16px 12px 50px;
+    margin-bottom: 8px;
+    background: var(--surface-2);
+    border-radius: 8px;
+    font-size: 14.5px;
+    line-height: 1.6;
+  }
+  .step-list li::before {
+    content: counter(step);
+    position: absolute;
+    left: 14px;
+    top: 12px;
+    width: 24px;
+    height: 24px;
+    background: var(--text);
+    color: var(--surface);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* TBD callout */
+  .tbd-callout {
+    margin: 18px 0 10px;
+    padding: 18px 22px;
+    background: var(--coral-fill);
+    border-left: 3px solid var(--accent-coral);
+    border-radius: 8px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .tbd-callout .tbd-icon {
+    font-size: 20px;
+    color: var(--coral-title);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .tbd-callout .tbd-content {
+    flex: 1;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--coral-title);
+  }
+  .tbd-callout .tbd-label {
+    font-weight: 600;
+    margin-bottom: 4px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-size: 11px;
+  }
+
+  /* Warranty Q24 — numbered breakdown with clause refs */
+  .warranty-list {
+    margin: 14px 0 6px;
+    padding-left: 0;
+    list-style: none;
+    counter-reset: warranty-counter;
+  }
+  .warranty-list > li {
+    counter-increment: warranty-counter;
+    position: relative;
+    padding: 14px 16px 14px 48px;
+    margin-bottom: 10px;
+    background: var(--teal-fill);
+    border-left: 3px solid var(--teal-title);
+    border-radius: 6px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text);
+  }
+  .warranty-list > li::before {
+    content: counter(warranty-counter);
+    position: absolute;
+    left: 14px;
+    top: 14px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--teal-title);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .warranty-list > li:last-child { margin-bottom: 0; }
+  .warranty-list > li strong { color: var(--teal-title); font-weight: 600; }
+  .clause-ref {
+    display: block;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 0.5px dashed var(--teal-sub);
+    font-size: 12.5px;
+    font-style: italic;
+    color: var(--teal-sub);
+    line-height: 1.5;
+  }
+
+  /* FAQ Quick reference */
+  .qref-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .qref-card {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    transition: border-color 0.15s ease;
+  }
+  .qref-card:hover { border-color: var(--border-strong); }
+  .qref-num {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-bottom: 4px;
+    letter-spacing: 0.06em;
+  }
+  .qref-q {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    line-height: 1.35;
+  }
+  .qref-a {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--text-muted);
+  }
+  .qref-section-header {
+    grid-column: 1 / -1;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 12px 0 4px;
+    border-bottom: 0.5px solid var(--border);
+    margin-top: 12px;
+  }
+  .qref-section-header:first-child { margin-top: 0; }
+
+  /* ============================================ */
+  /* ============== VIDEO MODE STYLES =========== */
+  /* ============================================ */
+
+  .video-intro {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 28px;
+    margin-bottom: 24px;
+    align-items: start;
+  }
+
+  .video-headline {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+  .video-sub {
+    font-size: 14.5px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 0;
+  }
+
+  .video-meta-card {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+  }
+  .video-meta-card .vm-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 7px 0;
+    border-bottom: 0.5px solid var(--border);
+    font-size: 13px;
+  }
+  .video-meta-card .vm-row:last-child { border-bottom: none; }
+  .video-meta-card .vm-label {
+    color: var(--text-muted);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+  .video-meta-card .vm-value {
+    color: var(--text);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .video-meta-card .vm-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .video-player-wrap {
+    background: #0F1419;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    position: relative;
+    aspect-ratio: 16 / 9;
+    margin-bottom: 24px;
+  }
+  .video-player-wrap video,
+  .video-player-wrap iframe {
+    width: 100%;
+    height: 100%;
+    display: block;
+    background: #0F1419;
+    border: 0;
+  }
+  .video-fallback-msg {
+    position: absolute;
+    inset: 0;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 30px;
+    color: #fff;
+    text-align: center;
+  }
+  .video-player-wrap.error .video-fallback-msg { display: flex; }
+  .video-player-wrap.error video { opacity: 0.05; }
+  .video-fallback-msg i { font-size: 36px; color: var(--accent-coral); }
+  .video-fallback-msg p { font-size: 14px; line-height: 1.5; max-width: 420px; }
+  .video-fallback-msg code {
+    font-family: 'SF Mono', Menlo, monospace;
+    background: rgba(255,255,255,0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12.5px;
+  }
+
+  /* Chapter markers */
+  .chapter-section-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .chapter-section-title::after {
+    content: "";
+    flex: 1;
+    height: 0.5px;
+    background: var(--border);
+  }
+
+  .chapters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+
+  .chapter-btn {
+    all: unset;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+    transition: border-color 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+  }
+  .chapter-btn:hover {
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow);
+  }
+  .chapter-btn:active { transform: scale(0.99); }
+  .chapter-btn.active {
+    border-color: var(--accent-coral);
+    box-shadow: 0 0 0 3px rgba(255, 107, 91, 0.12);
+  }
+  .chapter-time {
+    flex-shrink: 0;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent-coral);
+    background: var(--coral-fill);
+    padding: 5px 9px;
+    border-radius: 6px;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+    min-width: 48px;
+    text-align: center;
+  }
+  .chapter-text { flex: 1; }
+  .chapter-label {
+    display: block;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.3;
+    margin-bottom: 3px;
+  }
+  .chapter-desc {
+    display: block;
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  .video-cta-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 14px 18px;
+    background: var(--coral-fill);
+    border-left: 3px solid var(--accent-coral);
+    border-radius: 8px;
+    font-size: 13.5px;
+    color: var(--coral-title);
+    line-height: 1.5;
+  }
+  .video-cta-row i {
+    font-size: 18px;
+    color: var(--coral-title);
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 900px) {
+    .video-intro { grid-template-columns: 1fr; }
+    .chapters-grid { grid-template-columns: 1fr; }
+  }
+
+  /* SHARED FOOTER */
+  .footer {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 0.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--text-faint);
+    letter-spacing: 0.06em;
+  }
+  .footer-mark {
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+  }
+
+  /* ============================================ */
+  /* ============== RESPONSIVE ================== */
+  /* ============================================ */
+
+  /* Tablet & under (≤1024px) - FAQ becomes single column */
+  @media (max-width: 1024px) {
+    .faq-layout { grid-template-columns: 1fr; }
+    .faq-sidebar { position: static; max-height: 50vh; }
+    .qref-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Tablet & phone (≤768px) - most layout simplifications */
+  @media (max-width: 768px) {
+    /* Stage spacing - respect safe-area on notched devices */
+    .stage {
+      padding: 24px 16px 32px;
+      padding-left: max(16px, env(safe-area-inset-left));
+      padding-right: max(16px, env(safe-area-inset-right));
+    }
+
+    /* Header - stack title and meta vertically */
+    .header-block {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+    .header-left { min-width: 0; }
+    .h1 { font-size: 28px; }
+    .lede { font-size: 14px; }
+    /* Header meta: turn into a clean 2-line stack on mobile */
+    .header-meta {
+      text-align: left;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 18px;
+      padding: 10px 14px;
+      background: var(--surface);
+      border: 0.5px solid var(--border);
+      border-radius: 10px;
+      line-height: 1.4;
+    }
+    .header-meta br { display: none; }
+    .header-meta strong {
+      display: inline;
+      color: var(--text-muted);
+      margin-right: 4px;
+    }
+    .header-meta strong[style] {
+      margin-top: 0 !important;
+    }
+
+    /* MODE SWITCHER - horizontal scroll with fade indicator */
+    .mode-switcher {
+      display: flex;
+      max-width: 100%;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      -webkit-overflow-scrolling: touch;
+      margin-bottom: 20px;
+      /* fade-right indicator to signal more tabs */
+      -webkit-mask-image: linear-gradient(to right, black calc(100% - 24px), transparent 100%);
+              mask-image: linear-gradient(to right, black calc(100% - 24px), transparent 100%);
+    }
+    .mode-switcher.scrolled-end {
+      -webkit-mask-image: none;
+              mask-image: none;
+    }
+    .mode-switcher::-webkit-scrollbar { display: none; }
+    .mode-btn {
+      padding: 11px 16px;
+      flex-shrink: 0;
+      font-size: 13px;
+      gap: 7px;
+      min-height: 44px;  /* touch target */
+    }
+    .mode-btn .count-pill { font-size: 10px; padding: 1.5px 7px; }
+
+    /* VP audience tabs - scrollable, tighter, with fade indicator */
+    .vp-tabs {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      -webkit-mask-image: linear-gradient(to right, black calc(100% - 24px), transparent 100%);
+              mask-image: linear-gradient(to right, black calc(100% - 24px), transparent 100%);
+    }
+    .vp-tabs.scrolled-end {
+      -webkit-mask-image: none;
+              mask-image: none;
+    }
+    .vp-tabs::-webkit-scrollbar { display: none; }
+    .vp-tab {
+      font-size: 12.5px;
+      min-width: 120px;
+      padding: 11px 14px;
+      flex: 0 0 auto;
+      min-height: 42px;
+    }
+
+    /* Color legend - wraps */
+    .legend {
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      padding: 12px 14px;
+    }
+    .legend-label { width: 100%; }
+
+    /* Controls row (under universal cards) - stack */
+    .controls-row {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 12px;
+    }
+    .keyboard-hints { display: none; }  /* No keyboard on touch */
+    .control-btn { justify-content: center; padding: 11px 14px; min-height: 42px; }
+
+    /* Universal cards - 2 columns at tablet, 1 at phone */
+    .cards-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    /* Detail panel */
+    .detail-panel { padding: 20px 22px; }
+
+    /* Audience playbook header - keep horizontal but tighten */
+    .audience-header {
+      gap: 14px;
+      padding: 18px 20px;
+    }
+    .audience-icon-circle { width: 48px; height: 48px; }
+    .audience-icon-circle i { font-size: 24px; }
+    .audience-title { font-size: 22px; }
+    .audience-anchor { font-size: 13px; line-height: 1.55; margin-top: 4px; }
+
+    /* Layered prop cards */
+    .prop-item { padding: 16px 18px; }
+    .prop-name { font-size: 15px; }
+    .prop-body { font-size: 13.5px; }
+    .prop-header { gap: 8px; }
+
+    /* FAQ search row - stack search + view toggle */
+    .faq-search-row {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 12px;
+    }
+    .faq-search-box { min-width: 0; width: 100%; }
+    .faq-search-stats {
+      order: 3;
+      text-align: center;
+      width: 100%;
+    }
+    .faq-view-toggle {
+      align-self: stretch;
+      display: flex;
+    }
+    .faq-view-btn { flex: 1; justify-content: center; padding: 10px 12px; min-height: 42px; }
+
+    /* FAQ reading pane */
+    .faq-reading-pane { padding: 24px 22px; }
+    .question-title { font-size: 22px; }
+    .reading-meta { gap: 8px; }
+
+    /* FAQ sidebar */
+    .faq-sidebar { max-height: 40vh; }
+    .faq-question-item { min-height: 40px; }
+
+    /* Video */
+    .video-meta-card { padding: 16px 18px; }
+    .video-headline { font-size: 20px; }
+    .video-sub { font-size: 13.5px; }
+
+    /* 3D Sample Lab */
+    .demo-header { margin-bottom: 14px; }
+    .demo-title { font-size: 22px; }
+    .demo-subtitle { font-size: 13px; }
+    .demo-canvas-wrap { height: 380px; }
+    .bwm-hint, .bwm-stage-badge {
+      font-size: 11px;
+      padding: 5px 9px;
+    }
+    .bwm-controls { gap: 8px; }
+    .bwm-btn { min-width: 100px; padding: 12px 14px; font-size: 12.5px; min-height: 44px; }
+    .demo-context-card { padding: 16px 18px; }
+    .demo-context-card-text { font-size: 13px; }
+
+    /* Footer - stack */
+    .footer {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      margin-top: 36px;
+      padding-top: 20px;
+    }
+  }
+
+  /* Phone (≤480px) - tightest spacing, single-column everything */
+  @media (max-width: 480px) {
+    .stage {
+      padding: 18px 14px 24px;
+      padding-left: max(14px, env(safe-area-inset-left));
+      padding-right: max(14px, env(safe-area-inset-right));
+    }
+
+    /* Header */
+    .h1 { font-size: 24px; letter-spacing: -0.015em; }
+    .lede { font-size: 13.5px; line-height: 1.5; }
+    .eyebrow { font-size: 11px; margin-bottom: 10px; }
+    .header-meta { font-size: 11.5px; padding: 10px 12px; }
+
+    /* MODE SWITCHER - hide count pills on phones, narrower padding */
+    .mode-btn {
+      padding: 10px 14px;
+      gap: 6px;
+      font-size: 12.5px;
+      min-height: 44px;
+    }
+    .mode-btn .count-pill { display: none; }
+    .mode-btn i { font-size: 16px; }
+
+    /* VP tabs */
+    .vp-tab { min-width: 108px; padding: 10px 12px; font-size: 12px; min-height: 40px; }
+    .vp-tab i { font-size: 14px; }
+
+    /* Legend swatches/labels */
+    .legend-item { font-size: 11.5px; }
+    .legend-dot { width: 9px; height: 9px; }
+
+    /* Universal cards - single column on phone */
+    .cards-grid {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .card { padding: 18px 18px 16px; min-height: 0; }
+    .card-headline { font-size: 17px; }
+    .card-tagline { font-size: 13px; }
+    .card-pitch-btn { font-size: 12px; padding: 10px 14px; min-height: 44px; }
+
+    /* Detail panel */
+    .detail-panel { padding: 18px 18px; border-radius: 10px; }
+    .detail-text { font-size: 14px; }
+
+    /* Audience playbook header */
+    .audience-header {
+      gap: 12px;
+      padding: 16px 16px;
+      border-radius: 12px;
+    }
+    .audience-icon-circle { width: 44px; height: 44px; }
+    .audience-icon-circle i { font-size: 22px; }
+    .audience-title { font-size: 20px; }
+    .audience-anchor { font-size: 12.5px; }
+    .audience-eyebrow { font-size: 10px; }
+
+    /* Prop items */
+    .layer-num { font-size: 10px; padding: 3px 9px; }
+    .layer-title { font-size: 14px; }
+    .prop-item { padding: 14px 16px; border-radius: 10px; }
+    .prop-name { font-size: 14.5px; }
+    .prop-body { font-size: 13px; line-height: 1.6; }
+    .prop-source { font-size: 10px; padding: 2px 7px; }
+    .prop-header { gap: 6px; }
+
+    /* FAQ */
+    .faq-sidebar { padding: 6px; max-height: 38vh; }
+    .faq-section-header { padding: 8px 10px; font-size: 10.5px; }
+    .faq-question-item { padding: 10px; font-size: 12.5px; min-height: 42px; }
+    .faq-search-box input { font-size: 14px; height: 44px; }
+    .faq-reading-pane { padding: 22px 18px; border-radius: 12px; }
+    .question-title { font-size: 20px; margin-bottom: 18px; }
+    .answer-body { font-size: 14.5px; line-height: 1.7; }
+    .meta-pill { font-size: 10px; padding: 3px 9px; }
+    .spec-table th, .spec-table td { padding: 8px 10px; font-size: 12.5px; }
+    .step-list li { padding: 10px 14px 10px 44px; font-size: 13.5px; }
+    .step-list li::before { left: 12px; top: 10px; width: 22px; height: 22px; font-size: 11px; }
+
+    /* Video */
+    .video-headline { font-size: 19px; }
+    .video-sub { font-size: 13px; }
+    .video-meta-card { padding: 14px 16px; }
+    .chapter-btn { padding: 11px 12px; gap: 10px; min-height: 56px; }
+    .chapter-time { font-size: 10.5px; padding: 4px 7px; min-width: 42px; }
+    .chapter-label { font-size: 13px; }
+    .chapter-desc { font-size: 11.5px; }
+    .video-cta-row { padding: 12px 14px; font-size: 12.5px; }
+
+    /* 3D Sample Lab - single column buttons + legend */
+    .demo-title { font-size: 20px; }
+    .demo-subtitle { font-size: 12.5px; }
+    .demo-canvas-wrap { height: 320px; border-radius: 12px; }
+    .bwm-hint, .bwm-stage-badge { font-size: 10.5px; padding: 5px 8px; }
+    .bwm-controls { flex-direction: column; gap: 8px; }
+    .bwm-btn { width: 100%; flex: none; min-width: 0; padding: 13px 14px; font-size: 13px; min-height: 48px; }
+    .bwm-legend {
+      grid-template-columns: 1fr;
+      gap: 8px;
+      padding: 12px 14px;
+    }
+    .demo-context-card { padding: 14px 16px; border-radius: 10px; }
+    .demo-context-card-title { font-size: 11px; }
+    .demo-context-card-text { font-size: 12.5px; line-height: 1.55; }
+
+    /* Field-pitch Copy buttons: bigger tap target on mobile */
+    .pitch-btn.pitch-btn-small { padding: 11px 16px; min-height: 44px; font-size: 12.5px; }
+
+    /* Footer */
+    .footer { font-size: 10px; gap: 6px; }
+  }
+
+  /* Extra-small phones (≤360px) - dialled down further */
+  @media (max-width: 360px) {
+    .stage { padding: 16px 12px 22px; }
+    .h1 { font-size: 22px; }
+    .lede { font-size: 13px; }
+    .mode-btn { padding: 10px 12px; font-size: 12px; }
+    .vp-tab { min-width: 96px; font-size: 11.5px; padding: 9px 10px; }
+    .card-headline { font-size: 16px; }
+    .question-title { font-size: 19px; }
+    .demo-canvas-wrap { height: 280px; }
+  }
+
+  /* ============================================ */
+  /* ========== 3D SAMPLE LAB STYLES ============ */
+  /* ============================================ */
+  .demo-header {
+    margin-bottom: 18px;
+  }
+  .demo-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+    letter-spacing: -0.015em;
+  }
+  .demo-subtitle {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.55;
+    max-width: 720px;
+  }
+
+  .demo-canvas-wrap {
+    position: relative;
+    width: 100%;
+    height: 480px;
+    border-radius: 14px;
+    overflow: hidden;
+    background: linear-gradient(180deg, #fdfcf8 0%, #f0ecdf 100%);
+    border: 0.5px solid var(--border);
+    box-shadow: var(--shadow);
+    margin-top: 8px;
+  }
+  #bwm-canvas {
+    display: block;
+    cursor: grab;
+    touch-action: none; /* So drag-to-rotate works on touch without page scroll */
+  }
+  .bwm-hint {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    background: rgba(255, 255, 255, 0.92);
+    border: 0.5px solid var(--border);
+    border-radius: 8px;
+    padding: 7px 11px;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+    backdrop-filter: blur(4px);
+  }
+  .bwm-hint i {
+    font-size: 14px;
+    vertical-align: -2px;
+    margin-right: 5px;
+    color: var(--accent-coral);
+  }
+  .bwm-stage-badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: var(--text);
+    color: var(--surface);
+    border-radius: 8px;
+    padding: 7px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  .bwm-controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+  .bwm-btn {
+    all: unset;
+    cursor: pointer;
+    flex: 1;
+    min-width: 140px;
+    padding: 12px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+    text-align: center;
+    transition: border-color 0.15s ease, background 0.15s ease, transform 0.1s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+  }
+  .bwm-btn i { font-size: 16px; }
+  .bwm-btn:hover:not(:disabled) {
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow);
+  }
+  .bwm-btn:active:not(:disabled) { transform: scale(0.98); }
+  .bwm-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .bwm-btn-primary {
+    background: var(--text);
+    color: var(--surface);
+    border-color: var(--text);
+  }
+  .bwm-btn-primary:hover:not(:disabled) {
+    background: #000;
+    border-color: #000;
+  }
+  .bwm-btn-primary i { color: var(--surface); }
+
+  .bwm-legend {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+    padding: 14px 18px;
+    background: var(--surface-2);
+    border-radius: 10px;
+    border: 0.5px solid var(--border);
+  }
+  .bwm-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+  .bwm-legend-swatch {
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+
+  .demo-context-card {
+    margin-top: 24px;
+    padding: 18px 22px;
+    background: var(--coral-fill);
+    border-radius: 12px;
+    border-left: 3px solid var(--accent-coral);
+  }
+  .demo-context-card-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--coral-sub);
+    margin-bottom: 8px;
+  }
+  .demo-context-card-text {
+    font-size: 13.5px;
+    color: var(--coral-title);
+    line-height: 1.6;
+  }
+  .demo-context-card-text strong { font-weight: 700; }
+
+  /* ====== PITCH MODAL ====== */
+  .card-pitch-btn {
+    margin-top: auto;
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 7px 11px;
+    border-radius: 7px;
+    background: rgba(255,255,255,0.55);
+    border: 0.5px solid rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.15s ease;
+  }
+  .card-pitch-btn:hover {
+    background: rgba(255,255,255,0.9);
+    transform: translateY(-1px);
+  }
+  .card-pitch-btn i { font-size: 13px; }
+
+  .pitch-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(20,30,35,0.55);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 1000;
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 40px 20px;
+    overflow-y: auto;
+    animation: pitchFadeIn 0.2s ease;
+  }
+  .pitch-modal-overlay.open { display: flex; }
+  @keyframes pitchFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .pitch-modal {
+    background: var(--surface);
+    border-radius: 16px;
+    max-width: 880px;
+    width: 100%;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.25);
+    overflow: hidden;
+    animation: pitchSlideUp 0.25s ease;
+  }
+  @keyframes pitchSlideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .pitch-modal-head {
+    padding: 28px 32px 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    border-bottom: 0.5px solid var(--border);
+    position: relative;
+  }
+  .pitch-modal-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .pitch-modal-icon i { font-size: 26px; }
+  .pitch-modal-titles { flex: 1; min-width: 0; }
+  .pitch-modal-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .pitch-modal-title {
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.2;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .pitch-modal-tagline {
+    font-size: 13.5px;
+    color: var(--text-muted);
+    line-height: 1.45;
+  }
+  .pitch-modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--surface-2);
+    border: 0.5px solid var(--border);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .pitch-modal-close:hover {
+    background: var(--bg);
+    color: var(--text);
+  }
+  .pitch-modal-close i { font-size: 18px; }
+
+  .pitch-modal-body {
+    padding: 26px 32px 36px;
+    max-height: calc(100vh - 220px);
+    overflow-y: auto;
+  }
+
+  .pitch-section {
+    margin-bottom: 26px;
+    padding-bottom: 22px;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .pitch-section:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  .pitch-section-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+  .pitch-section-label i { font-size: 14px; }
+
+  .pitch-30sec {
+    font-size: 15.5px;
+    line-height: 1.65;
+    color: var(--text);
+    padding: 16px 18px;
+    border-radius: 10px;
+    background: var(--surface-2);
+    border-left: 3px solid var(--accent-coral);
+  }
+  .pitch-hinglish {
+    margin-top: 12px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-muted);
+    font-style: italic;
+    padding-left: 14px;
+    border-left: 2px solid var(--border-strong);
+  }
+  .pitch-hinglish strong {
+    display: block;
+    font-style: normal;
+    color: var(--text);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .pitch-evidence {
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--text);
+    margin-bottom: 14px;
+  }
+  .pitch-evidence:last-child { margin-bottom: 0; }
+  .pitch-evidence strong {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+
+  .pitch-objection {
+    margin-bottom: 18px;
+  }
+  .pitch-objection:last-child { margin-bottom: 0; }
+  .pitch-objection-q {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 8px;
+    line-height: 1.45;
+  }
+  .pitch-objection-q::before {
+    content: "Q.";
+    color: var(--accent-coral);
+    margin-right: 8px;
+    font-weight: 700;
+  }
+  .pitch-objection-a {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text);
+    padding-left: 22px;
+    border-left: 2px solid var(--border);
+    margin-left: 4px;
+  }
+
+  .pitch-when-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .pitch-when-list li {
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--text);
+    padding: 10px 0 10px 26px;
+    position: relative;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .pitch-when-list li:last-child { border-bottom: none; }
+  .pitch-when-list li::before {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 17px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent-coral);
+  }
+  .pitch-when-list li.dont::before {
+    background: var(--text-faint);
+  }
+  .pitch-when-list li.dont {
+    color: var(--text-muted);
+  }
+  .pitch-when-list li strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .pitch-modal-print {
+    display: flex;
+    justify-content: flex-end;
+    padding: 14px 32px;
+    background: var(--surface-2);
+    border-top: 0.5px solid var(--border);
+  }
+  .pitch-modal-print-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 7px;
+    background: var(--surface);
+    border: 0.5px solid var(--border-strong);
+    cursor: pointer;
+    color: var(--text);
+    transition: background 0.15s ease;
+  }
+  .pitch-modal-print-btn:hover {
+    background: var(--bg);
+  }
+  .pitch-modal-print-btn i { font-size: 13px; }
+
+  /* ============================================ */
+  /* === PITCH MODAL RESPONSIVE (must come AFTER base modal styles to win cascade) === */
+  /* ============================================ */
+  @media (max-width: 768px) {
+    .pitch-modal-overlay {
+      padding: 16px 12px;
+      align-items: flex-start;
+    }
+    .pitch-modal { border-radius: 14px; }
+    .pitch-modal-head {
+      padding: 22px 20px 18px 20px;
+      gap: 14px;
+    }
+    .pitch-modal-title { font-size: 20px; }
+    .pitch-modal-tagline { font-size: 13px; }
+    .pitch-modal-icon { width: 44px; height: 44px; }
+    .pitch-modal-icon i { font-size: 22px; }
+    .pitch-modal-close { top: 12px; right: 12px; width: 38px; height: 38px; }
+    .pitch-modal-body {
+      padding: 22px 20px 28px;
+      max-height: calc(100vh - 180px);
+    }
+    .pitch-modal-print { padding: 12px 20px; }
+    .pitch-modal-print-btn { min-height: 38px; padding: 9px 14px; }
+  }
+
+  @media (max-width: 480px) {
+    /* Full-bleed modal on phones */
+    .pitch-modal-overlay {
+      padding: 0;
+      align-items: stretch;
+    }
+    .pitch-modal {
+      border-radius: 0;
+      min-height: 100vh;
+      max-width: 100%;
+      width: 100%;
+    }
+    .pitch-modal-head {
+      padding: 20px 16px 16px;
+      padding-top: max(20px, env(safe-area-inset-top));
+      gap: 12px;
+    }
+    .pitch-modal-body {
+      padding: 20px 16px 28px;
+      max-height: none;
+    }
+    .pitch-modal-print {
+      padding: 12px 16px;
+      padding-bottom: max(12px, env(safe-area-inset-bottom));
+    }
+    .pitch-section { margin-bottom: 22px; padding-bottom: 18px; }
+    .pitch-modal-title { font-size: 19px; line-height: 1.25; }
+    .pitch-modal-tagline { font-size: 12.5px; }
+    .pitch-modal-eyebrow { font-size: 10.5px; }
+    .pitch-modal-icon { width: 42px; height: 42px; }
+    .pitch-modal-icon i { font-size: 20px; }
+    .pitch-modal-close {
+      top: max(10px, env(safe-area-inset-top));
+      right: 10px;
+      width: 40px;
+      height: 40px;
+    }
+    .pitch-30sec { padding: 14px 16px; font-size: 14.5px; }
+    .pitch-hinglish { font-size: 13.5px; }
+    .pitch-evidence { font-size: 13.5px; }
+    .pitch-objection-q { font-size: 13.5px; }
+    .pitch-objection-a { font-size: 13px; padding-left: 16px; }
+    .pitch-when-list li { font-size: 13.5px; padding: 10px 0 10px 24px; }
+    .pitch-section-label { font-size: 10.5px; }
+  }
+
+  @media print {
+    body { background: white; }
+    .controls-row, .keyboard-hints, .vp-tabs, .mode-switcher, .faq-search-row, .faq-sidebar, .footer { display: none; }
+    .vp-panel, .mode-panel { display: block !important; page-break-after: always; }
+    .faq-layout { grid-template-columns: 1fr; }
+    .faq-reading-pane { border: none; padding: 0; }
+
+    /* Pitch modal print - when opened, hide everything else */
+    body.pitch-printing > *:not(.pitch-modal-overlay) { display: none !important; }
+    body.pitch-printing .pitch-modal-overlay {
+      position: static;
+      background: white;
+      backdrop-filter: none;
+      padding: 0;
+      display: block;
+    }
+    body.pitch-printing .pitch-modal {
+      box-shadow: none;
+      max-width: 100%;
+    }
+    body.pitch-printing .pitch-modal-close,
+    body.pitch-printing .pitch-modal-print,
+    body.pitch-printing .card-pitch-btn { display: none !important; }
+  }
+
+  /* ============================================
+     ======== FIELD PITCHES STYLES ===============
+     ======== Inline layout (no dropdowns) =======
+     ============================================ */
+  .pitch-section-head {
+    padding: 22px 4px 6px;
+  }
+  .pitch-section-title {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+  .pitch-section-meta {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+
+  .pitch-search-wrap {
+    position: relative;
+    margin: 14px 0 22px;
+  }
+  .pitch-search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-faint);
+    font-size: 16px;
+  }
+  .pitch-search {
+    width: 100%;
+    padding: 12px 14px 12px 40px;
+    border: 1px solid var(--border-strong);
+    border-radius: 10px;
+    background: var(--surface);
+    font-size: 14px;
+    color: var(--text);
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .pitch-search:focus {
+    border-color: var(--accent-coral);
+    box-shadow: 0 0 0 3px rgba(255,107,91,0.12);
+  }
+  .pitch-search::placeholder { color: var(--text-faint); }
+
+  .pitch-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  /* Inline pitch card - all content visible */
+  .pitch-card-inline {
+    background: var(--surface);
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    padding: 22px 24px 22px;
+    transition: box-shadow 0.18s ease, transform 0.18s ease;
+  }
+  .pitch-card-inline:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-1px);
+  }
+  .pitch-card-head-inline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .pitch-card-num {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--ut-yellow-deep);
+    font-variant-numeric: tabular-nums;
+    background: var(--ut-yellow-soft);
+    padding: 3px 9px;
+    border-radius: 4px;
+    display: inline-block;
+  }
+  .pitch-card-title-inline {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+    margin-bottom: 14px;
+  }
+
+  .pitch-quote {
+    background: var(--surface-2);
+    border-radius: 12px;
+    padding: 18px 22px 18px 48px;
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: var(--text);
+    position: relative;
+    font-style: italic;
+  }
+  .pitch-quote.english { font-style: normal; }
+  .pitch-quote::before {
+    content: "\201C";
+    position: absolute;
+    left: 18px;
+    top: 28px;
+    font-size: 40px;
+    line-height: 0;
+    color: var(--accent-coral);
+    font-style: normal;
+    font-weight: 700;
+    font-family: Georgia, serif;
+  }
+
+  .pitch-translation {
+    margin-top: 14px;
+    padding: 14px 18px;
+    background: transparent;
+    border-left: 3px solid var(--border-strong);
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--text-muted);
+    animation: pitchTransIn 0.22s ease;
+  }
+  .pitch-translation[hidden] { display: none; }
+  @keyframes pitchTransIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .pitch-translation-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-faint);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  /* Action button row inside each pitch card head */
+  .pitch-card-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  /* Active state for the Translate toggle (when English is shown) */
+  .pitch-btn[data-action="toggle-en"].active {
+    background: var(--teal-fill);
+    color: var(--teal-title);
+    border-color: var(--teal-title);
+  }
+
+  /* Buttons */
+  .pitch-btn {
+    all: unset;
+    cursor: pointer;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 9px 16px;
+    border-radius: 8px;
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    background: var(--surface);
+    color: var(--text);
+    border: 1.5px solid var(--border-strong);
+    transition: background 0.12s, border-color 0.12s, transform 0.12s, color 0.12s;
+  }
+  .pitch-btn:hover { border-color: var(--text); }
+  .pitch-btn:active { transform: scale(0.97); }
+  .pitch-btn.primary {
+    background: var(--text);
+    color: var(--surface);
+    border-color: var(--text);
+  }
+  .pitch-btn.primary:hover { background: #000; }
+  .pitch-btn.copied {
+    background: var(--teal-fill);
+    color: var(--teal-title);
+    border-color: var(--teal-title);
+    box-shadow: 0 0 0 2px var(--ut-yellow);
+  }
+  .pitch-btn-small {
+    padding: 7px 12px;
+    font-size: 11.5px;
+    border-radius: 7px;
+  }
+  .pitch-btn i { font-size: 14px; }
+  .pitch-btn-small i { font-size: 13px; }
+
+  /* Toast */
+  .pitch-toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--text);
+    color: var(--surface);
+    padding: 12px 22px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+    transition: transform 0.28s ease, opacity 0.28s ease;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .pitch-toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  .pitch-toast i { color: var(--ut-yellow); margin-right: 6px; }
+
+  .pitch-empty {
+    text-align: center;
+    padding: 50px 20px;
+    color: var(--text-faint);
+    font-size: 14px;
+  }
+
+  mark.pitch-mark {
+    background: rgba(255,107,91,0.18);
+    color: var(--text);
+    padding: 0 3px;
+    border-radius: 3px;
+    font-weight: 600;
+  }
+
+  /* Demo callout - coral-toned, consistent with dashboard */
+  .pitch-demo-card {
+    margin-top: 26px;
+    background: linear-gradient(135deg, var(--coral-fill) 0%, #FFF6F3 100%);
+    border-radius: 14px;
+    border: 1px solid rgba(199,82,57,0.2);
+    padding: 22px 24px;
+  }
+  .pitch-demo-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--coral-sub);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .pitch-demo-eyebrow i { font-size: 14px; }
+  .pitch-demo-title {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--coral-title);
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+  .pitch-demo-body {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--text);
+  }
+  .pitch-demo-body strong { color: var(--coral-title); font-weight: 700; }
+
+  @media (max-width: 640px) {
+    .pitch-section-title { font-size: 20px; }
+    .pitch-card-inline { padding: 18px 18px; }
+    .pitch-card-title-inline { font-size: 15px; }
+    .pitch-quote { font-size: 14.5px; padding: 16px 18px 16px 42px; }
+    .pitch-quote::before { font-size: 34px; left: 14px; }
+    .pitch-translation { font-size: 12.5px; padding: 12px 14px; }
+    .pitch-demo-title { font-size: 17px; }
+    .pitch-demo-card { padding: 18px 18px; }
+  }
+
+</style>
+</head>
+<body>
+
+<div class="stage">
+
+  <!-- ====== SHARED HEADER ====== -->
+  <div class="header-block">
+    <div class="header-left">
+      <div class="header-brand-row">
+        <img src="data:image/jpeg;base64,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" alt="UltraTech Cement · Building Products Division" class="brand-logo">
+        <div class="eyebrow">UltraTech · Building Products Division</div>
+      </div>
+      <h1 class="h1">BWM GTM Dashboard.</h1>
+      <p class="lede">Value propositions, Product FAQs, and Field Pitches for the Bathroom Waterproofing Membrane.</p>
+    </div>
+    <div class="header-meta">
+      <strong>Pilot Cities</strong><br>
+      Pune · Chandigarh<br>
+      <strong style="display: inline-block; margin-top: 6px;">Status</strong><br>
+      Pre-launch · GTM
+    </div>
+  </div>
+
+  <!-- ====== TOP-LEVEL MODE SWITCHER ====== -->
+  <div class="mode-switcher" role="tablist" aria-label="Switch between Value Propositions and FAQ">
+    <button class="mode-btn active" data-mode="pitches" role="tab">
+      <i class="ti ti-quote" aria-hidden="true"></i>
+      <span>Field Pitches</span>
+      <span class="count-pill">10 pitches</span>
+    </button>
+    <button class="mode-btn" data-mode="faq" role="tab">
+      <i class="ti ti-help-hexagon" aria-hidden="true"></i>
+      <span>Product FAQ</span>
+      <span class="count-pill">24 questions</span>
+    </button>
+    <button class="mode-btn" data-mode="video" role="tab">
+      <i class="ti ti-player-play" aria-hidden="true"></i>
+      <span>Application Video</span>
+      <span class="count-pill">Walkthrough</span>
+    </button>
+    <button class="mode-btn" data-mode="vp" role="tab">
+      <i class="ti ti-bulb" aria-hidden="true"></i>
+      <span>Value Propositions</span>
+    </button>
+    <button class="mode-btn" data-mode="demo" role="tab">
+      <i class="ti ti-3d-cube-sphere" aria-hidden="true"></i>
+      <span>3D Sample Lab</span>
+      <span class="count-pill">Interactive</span>
+    </button>
+  </div>
+
+  <!-- ====== VALUE PROPS MODE ====== -->
+  <div class="mode-panel" id="mode-vp" role="tabpanel">
+
+    <!-- Inner tabs (audiences) -->
+    <div class="vp-tabs" role="tablist">
+      <button class="vp-tab active" data-vp-panel="universal" role="tab"><i class="ti ti-stack-2" aria-hidden="true"></i>Universal · 6 props</button>
+      <button class="vp-tab" data-vp-panel="architects" role="tab"><i class="ti ti-ruler" aria-hidden="true"></i>Architects</button>
+      <button class="vp-tab" data-vp-panel="tilers" role="tab"><i class="ti ti-tools" aria-hidden="true"></i>Tilers</button>
+      <button class="vp-tab" data-vp-panel="wp" role="tab"><i class="ti ti-droplet" aria-hidden="true"></i>Waterproofers</button>
+      <button class="vp-tab" data-vp-panel="cp" role="tab"><i class="ti ti-building-store" aria-hidden="true"></i>Channel Partners</button>
+    </div>
+
+    <!-- UNIVERSAL PANEL -->
+    <div class="vp-panel active" id="vp-panel-universal" role="tabpanel">
+
+      <div class="legend">
+        <span class="legend-label">Colour key</span>
+        <span class="legend-item"><span class="legend-dot coral"></span>Conversion levers</span>
+        <span class="legend-item"><span class="legend-dot teal"></span>Trust &amp; system claims</span>
+        <span class="legend-item"><span class="legend-dot purple"></span>Specifier-grade certification</span>
+      </div>
+
+      <div class="cards-grid" id="cards-grid"></div>
+
+      <div class="detail-panel" id="detail-panel">
+        <div class="detail-header">
+          <i class="ti ti-info-circle" aria-hidden="true" style="font-size: 18px; color: var(--accent-coral);"></i>
+          <span class="detail-eyebrow" style="color: var(--text-muted);">Field evidence</span>
+        </div>
+        <p class="detail-empty">Hover any card above to preview the evidence behind it. Click to lock it in. Use "Show all evidence" to see the complete field-backing.</p>
+      </div>
+
+      <div class="controls-row">
+        <div class="control-meta">
+          <i class="ti ti-database" aria-hidden="true" style="font-size: 14px;"></i>
+          <span>6 propositions · field-grounded</span>
+        </div>
+        <div class="keyboard-hints">
+          <kbd>1</kbd>–<kbd>6</kbd> select &nbsp;·&nbsp; <kbd>A</kbd> all evidence &nbsp;·&nbsp; <kbd>Esc</kbd> reset
+        </div>
+        <button class="control-btn" id="show-all-btn"><i class="ti ti-eye" aria-hidden="true" style="font-size: 14px;"></i>Show all evidence</button>
+      </div>
+    </div>
+    <!-- ARCHITECTS PANEL -->
+    <div class="vp-panel" id="vp-panel-architects" role="tabpanel">
+      <div class="audience-header">
+        <div class="audience-icon-circle" style="background: var(--purple-fill);">
+          <i class="ti ti-ruler" aria-hidden="true" style="color: var(--purple-title);"></i>
+        </div>
+        <div class="audience-meta">
+          <div class="audience-eyebrow" style="color: var(--purple-sub);">Playbook 01</div>
+          <div class="audience-title">Architects</div>
+          <p class="audience-anchor">The trust gateway between BWM and the homeowner. 10 architects across Pune and Chandigarh validated that agencies cannot sell BWM directly - only an architect's specification carries the trust premium needed for homeowner acceptance. Time savings (1-day vs 7-14 day) is the universal pitch hook; warranty document and TDS are the procurement requirements.</p>
+        </div>
+      </div>
+
+      <div class="layer-label">
+        <span class="layer-num">Layer 1</span>
+        <span class="layer-title">From the universal six · pick these for architects</span>
+      </div>
+      <div class="prop-list">
+        <div class="prop-item from-universal" style="border-left-color: var(--coral-title);">
+          <div class="prop-header">
+            <div class="prop-name">Time Saver - 1 day, not weeks</div>
+            <div class="prop-source universal">Universal #01</div>
+          </div>
+          <p class="prop-body">Every architect across both cities endorsed this framing as the strongest forward-pitchable USP. The Urban Grid (Pune): "That will be the best pitch we can get to a homeowner - &#8377;10 more expensive but tension-free, hassle-free, saves weeks." This is the headline architects will use with their clients.</p>
+        </div>
+        <div class="prop-item from-universal" style="border-left-color: var(--teal-title);">
+          <div class="prop-header">
+            <div class="prop-name">10-Year Warranty - Backed by UltraTech</div>
+            <div class="prop-source universal">Universal #02</div>
+          </div>
+          <p class="prop-body">Architects with premium clients sign tripartite affidavits on stamp paper, accepting liability for 3-5 years. The Urban Grid demanded warranty "in writing." Pankaj Nanda requested TDS specifically for BOQ integration. UltraTech's manufacturer-backed warranty lets architects underwrite their own client obligations without bearing the risk personally.</p>
+        </div>
+        <div class="prop-item from-universal" style="border-left-color: var(--purple-title);">
+          <div class="prop-header">
+            <div class="prop-name">International Standards - Specifier-grade certification</div>
+            <div class="prop-source universal">Universal #06</div>
+          </div>
+          <p class="prop-body">EN 1928, EN 12311-2, ANSI A118.12, EN 1328. The architect's specification language. Pankaj Nanda (Chandigarh) requested TDS specifically for BOQ integration: "Technical details are important for adding to BOQ and further processes." This is the procurement-language need the certifications + TDS together fulfill. AR_CHD_001 Aman did the same in the original dataset. Path to BOQ inclusion alongside Sika, Dr. Fixit, MYK, and Fosroc runs through these four standards.</p>
+        </div>
+        <div class="prop-item from-universal" style="border-left-color: var(--teal-title);">
+          <div class="prop-header">
+            <div class="prop-name">Complete Home Envelope - One system. One warranty.</div>
+            <div class="prop-source universal">Universal #03</div>
+          </div>
+          <p class="prop-body">Eternal M. Creators (Pune) repositioned the product outright: "Best product for balconies and terraces, Strongest signal that the product name limits the pitch. Bathroom + balcony is universal across all 10 architects; roof requires explicit pitching.</p>
+        </div>
+      </div>
+
+      <div class="layer-label">
+        <span class="layer-num">Layer 2</span>
+        <span class="layer-title">Tailored only for architects</span>
+      </div>
+      <div class="prop-list">
+        <div class="prop-item tailored">
+          <div class="prop-header">
+            <div class="prop-name">Structural Lift - thin profile, lighter slab, gained height</div>
+            <div class="prop-source tailored">Tailored</div>
+          </div>
+          <p class="prop-body">Brick bat adds 75-100mm dead load on the slab and eats floor-to-ceiling height. BWM's thin profile is a structural advantage, not just a finish advantage. Eternal M. Creators: "Whenever we do brick bed or waterproofing, the slab load increases. We face height issues." Engineer-language USP - lands in the architect's professional vocabulary.</p>
+        </div>
+        <div class="prop-item tailored">
+          <div class="prop-header">
+            <div class="prop-name">Beyond Bathrooms - the balcony + terrace bundle</div>
+            <div class="prop-source tailored">Tailored</div>
+          </div>
+          <p class="prop-body">All 10 architects engaged on bathroom + balcony as the universal application pair. Eternal M. Creators repositioned BWM as "best for balconies and terraces Only</p>
+        </div>
+        <div class="prop-item tailored">
+          <div class="prop-header">
+            <div class="prop-name">Procurement-ready deliverables - what to leave behind, every meeting</div>
+            <div class="prop-source tailored">Tailored</div>
+          </div>
+          <p class="prop-body">The cutout-retention pattern: 5 of 5 architects who took the cutout committed. The procurement-deliverable pair: TDS (Pankaj Nanda's ask) + warranty document (Urban Grid's "in writing"). Every architect meeting leaves behind: cutout + TDS + sample warranty + editable Excel/Word BOQ template.</p>
+        </div>
+      </div>
+    </div>
+    <!-- TILERS PANEL -->
+    <div class="vp-panel" id="vp-panel-tilers" role="tabpanel">
+      <div class="audience-header">
+        <div class="audience-icon-circle" style="background: var(--coral-fill);">
+          <i class="ti ti-tools" aria-hidden="true" style="color: var(--coral-title);"></i>
+        </div>
+        <div class="audience-meta">
+          <div class="audience-eyebrow" style="color: var(--coral-sub);">Playbook 02</div>
+          <div class="audience-title">Tilers</div>
+          <p class="audience-anchor">The applicator is physically present at the moment of tile-laying. One of the applicator architects use as their choice for BWM and the most easily-trained.</p>
+        </div>
+      </div>
+
+      <div class="layer-label">
+        <span class="layer-num">Layer 1</span>
+        <span class="layer-title">From the universal six · pick these for tilers</span>
+      </div>
+      <div class="prop-list">
+        <div class="prop-item from-universal" style="border-left-color: var(--coral-title);">
+          <div class="prop-header">
+            <div class="prop-name">Time Saver - 1 day, not weeks</div>
+            <div class="prop-source universal">Universal #01</div>
+          </div>
+          <p class="prop-body">Your job finishes faster. You take more bathrooms per month at the same labour. T_PNE_005 Pawan flagged the curing-time coordination problem under traditional methods.</p>
+        </div>
+        <div class="prop-item from-universal" style="border-left-color: var(--coral-title);">
+          <div class="prop-header">
+            <div class="prop-name">Simpler Protocol - 4 steps. One Applicator.</div>
+            <div class="prop-source universal">Universal #05</div>
+          </div>
+          <p class="prop-body">The official UltraTech video documents the exact sandwich method. You can master the protocol yourself, then cascade-train your in-house workers. T_CHD_001 in Chandigarh has flagged the same in-house ambition.</p>
+        </div>
+        <div class="prop-item from-universal" style="border-left-color: var(--teal-title);">
+          <div class="prop-header">
+            <div class="prop-name">10-Year Warranty - Backed by UltraTech</div>
+            <div class="prop-source universal">Universal #02</div>
+          </div>
+          <p class="prop-body">Use this when closing premium customers - homeowners ask about warranty before they ask about price. 7 of 13 tilers in research already see warranty as an active sales tool. One of only two UltraTech products with a manufacturer warranty.</p>
+        </div>
+      </div>
+
+      <div class="layer-label">
+        <span class="layer-num">Layer 2</span>
+        <span class="layer-title">Tailored only for tilers</span>
+      </div>
+      <div class="prop-list">
+        <div class="prop-item tailored">
+          <div class="prop-header">
+            <div class="prop-name">Income capture - you're already in the bathroom</div>
+            <div class="prop-source tailored">Tailored</div>
+          </div>
+          <p class="prop-body">The membrane goes down with the adhesive that sits below the tile. Only one applicator is in the bathroom at that moment, and it is you. Adding BWM to your scope is not workflow disruption - it is the path of least resistance. Additional revenue per job.</p>
+        </div>
+        <div class="prop-item tailored">
+          <div class="prop-header">
+            <div class="prop-name">You're the Pune architect's natural applicator pick</div>
+            <div class="prop-source tailored">Tailored</div>
+          </div>
+          <p class="prop-body">Shree Brahma in Pune explicitly named the tile fitter as the BWM applicator. Eternal M. Creators uses the same civil agency for both tile and waterproofing - and you can be that agency. When BWM is architect-specified, the trade choice flows back to whoever the architect already trusts on that project. Build trust with one architect; volume follows.</p>
+        </div>
+        <div class="prop-item tailored">
+          <div class="prop-header">
+            <div class="prop-name">Train once, monopolize the BWM trade in your area</div>
+            <div class="prop-source tailored">Tailored</div>
+          </div>
+          <p class="prop-body">Two Chandigarh architects explicitly flagged applicator training as a friction point - Aakriti and The Creators. Whichever local tilers train first will lock in the architect-specified work in that city. First-mover advantage, ~2-3 day learning curve.</p>
+        </div>
+      </div>
+    </div>
+    <!-- WP PANEL -->
+    <div class="vp-panel" id="vp-panel-wp" role="tabpanel">
+      <div class="audience-header">
+        <div class="audience-icon-circle" style="background: var(--teal-fill);">
+          <i class="ti ti-droplet" aria-hidden="true" style="color: var(--teal-title);"></i>
+        </div>
+        <div class="audience-meta">
+          <div class="audience-eyebrow" style="color: var(--teal-sub);">Playbook 03</div>
+          <div class="audience-title">Waterproofers</div>
+          <p class="audience-anchor">Caught in the cementitious/traditional methods.</p>
+        </div>
+      </div>
+
+      <div class="layer-label">
+        <span class="layer-num">Layer 1</span>
+        <span class="layer-title">From the universal six · pick these for waterproofers</span>
+      </div>
+      <div class="prop-list">
+        <div class="prop-item from-universal" style="border-left-color: var(--coral-title);">
+          <div class="prop-header">
+            <div class="prop-name">Time Saver - 1 day, not weeks</div>
+            <div class="prop-source universal">Universal #01</div>
+          </div>
+          <p class="prop-body">Cleaner project handoffs, faster cycle through your project pipeline. WP_PNE_002 Anmol explicitly noted BWM lets the applicator skip the coat that traditional methods require.</p>
+        </div>
+        <div class="prop-item from-universal" style="border-left-color: var(--purple-title);">
+          <div class="prop-header">
+            <div class="prop-name">International Standards - Specifier-grade certification</div>
+            <div class="prop-source universal">Universal #06</div>
+          </div>
+          <p class="prop-body">When you walk into an architect-led project, EN/ANSI compliance is the language that gets you specified. EN 1928 (watertightness), EN 12311-2 (tensile + elongation), ANSI A118.12 (crack isolation), EN 1328 (adhesion). WP_PNE_005 - the most BOQ-aware waterproofer in the dataset - confirmed architects' 4-brand list is built on standards-compliance.</p>
+        </div>
+        <div class="prop-item from-universal" style="border-left-color: var(--teal-title);">
+          <div class="prop-header">
+            <div class="prop-name">Complete Home Envelope - One system. One warranty.</div>
+            <div class="prop-source universal">Universal #03</div>
+          </div>
+          <p class="prop-body">BWM uses the identical sandwich method on every surface - walls, floors, balconies, repair, new build - no cold-joint failure points. Particularly important for the floor-to-ceiling shower-wall coverage. WP_PNE_004 raised this gap directly during fieldwork.</p>
+        </div>
+      </div>
+
+      <div class="layer-label">
+        <span class="layer-num">Layer 2</span>
+        <span class="layer-title">Tailored only for waterproofers</span>
+      </div>
+      <div class="prop-list">
+        <div class="prop-item tailored">
+          <div class="prop-header">
+            <div class="prop-name">Repair-easy - the segment's strongest endorsement</div>
+            <div class="prop-source tailored">Tailored</div>
+          </div>
+          <p class="prop-body">6 of 7 waterproofers in research endorsed BWM as repair-viable - the strongest segment-level endorsement of any single use case in the entire dataset. Same customer, same problem, faster fix, manufacturer warranty in place of your personal guarantee.</p>
+        </div>
+      </div>
+    </div>
+    <!-- CP PANEL -->
+    <div class="vp-panel" id="vp-panel-cp" role="tabpanel">
+      <div class="audience-header">
+        <div class="audience-icon-circle" style="background: var(--purple-fill);">
+          <i class="ti ti-building-store" aria-hidden="true" style="color: var(--purple-title);"></i>
+        </div>
+        <div class="audience-meta">
+          <div class="audience-eyebrow" style="color: var(--purple-sub);">Playbook 04</div>
+          <div class="audience-title">Channel Partners</div>
+          <p class="audience-anchor">The walk-in counter where homeowner/applicator converts.</p>
+        </div>
+      </div>
+
+      <div class="layer-label">
+        <span class="layer-num">Layer 1</span>
+        <span class="layer-title">From the universal six · pick these for channel partners</span>
+      </div>
+      <div class="prop-list">
+        <div class="prop-item from-universal" style="border-left-color: var(--teal-title);">
+          <div class="prop-header">
+            <div class="prop-name">10-Year Warranty - Backed by UltraTech</div>
+            <div class="prop-source universal">Universal #02</div>
+          </div>
+          <p class="prop-body">Premium customers and homeowners ask for warranty. CPs use it as a closing tool. 18 of 18 CPs in research read warranty as positive;. Strongest closing instrument at the dealer counter. One of only two UltraTech products with a manufacturer warranty - competitive moat against Sika, Pidilite, MYK.</p>
+        </div>
+        <div class="prop-item from-universal" style="border-left-color: var(--coral-title);">
+          <div class="prop-header">
+            <div class="prop-name">Time Saver - 1 day, not weeks</div>
+            <div class="prop-source universal">Universal #01</div>
+          </div>
+          <p class="prop-body">Gives you a clean differentiation story against any cementitious competitor on the counter. Customer asks "kitne din lagega?" and you have a one-line answer that nothing else on your shelf can match.</p>
+        </div>
+        <div class="prop-item from-universal" style="border-left-color: var(--coral-title);">
+          <div class="prop-header">
+            <div class="prop-name">The Reverse Pitch - &#8377;20k today. Or 2-3x the cost later.</div>
+            <div class="prop-source universal">Universal #04</div>
+          </div>
+          <p class="prop-body">Use this when a homeowner walks in for repair segment. Loss aversion is the closing frame for the walk-in repair customer with an issue at hand. 17/17 unanimous repair endorsement validates that the demand exists.</p>
+        </div>
+      </div>
+
+      <div class="layer-label">
+        <span class="layer-num">Layer 2</span>
+        <span class="layer-title">Tailored only for channel partners</span>
+      </div>
+      <div class="prop-list">
+        <div class="prop-item tailored">
+          <div class="prop-header">
+            <div class="prop-name">Architect-driven specification - your CP volume multiplier</div>
+            <div class="prop-source tailored">Tailored</div>
+          </div>
+          <p class="prop-body">The Urban Grid in Pune offered to push BWM into the brand-mandate list as an replacement. When BWM becomes architect-specified into an institutional account, the dealer counter sees that volume - single specification, multiple sites.</p>
+        </div>
+        <div class="prop-item tailored">
+          <div class="prop-header">
+            <div class="prop-name">The HNI repair niche</div>
+            <div class="prop-source tailored">Tailored</div>
+          </div>
+          <p class="prop-body">Two Chandigarh architects (Aakriti, Amit Saini) framed BWM as HNI-only because of pricing. That's not a problem at the CP counter - it's a positioning opportunity. The HNI walk-in repair customer is your highest-margin sale. Stock 2-3 rolls of BWM, position them visibly in your premium products section, and pair with the Reverse Pitch when this customer walks in.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- /mode-vp -->
+
+  <!-- ====== FAQ MODE ====== -->
+  <div class="mode-panel" id="mode-faq" role="tabpanel">
+
+    <div class="faq-search-row">
+      <div class="faq-search-box">
+        <i class="ti ti-search search-icon" aria-hidden="true"></i>
+        <input type="text" id="faq-search-input" placeholder="Search questions and answers...">
+        <button class="faq-search-clear" id="faq-search-clear" aria-label="Clear search"><i class="ti ti-x" style="font-size: 14px;"></i></button>
+      </div>
+      <span class="faq-search-stats" id="faq-search-stats">24 questions · 5 sections</span>
+      <div class="faq-view-toggle">
+        <button class="faq-view-btn active" id="faq-view-detailed" data-view="detailed"><i class="ti ti-layout-sidebar" aria-hidden="true"></i>Detailed</button>
+        <button class="faq-view-btn" id="faq-view-quick" data-view="quick"><i class="ti ti-layout-grid" aria-hidden="true"></i>Quick reference</button>
+      </div>
+    </div>
+
+    <!-- FAQ Detailed view -->
+    <div class="faq-layout" id="faq-detailed-view">
+      <aside class="faq-sidebar" id="faq-sidebar"></aside>
+      <main class="faq-reading-pane" id="faq-reading-pane"></main>
+    </div>
+
+    <!-- FAQ Quick reference -->
+    <div id="faq-quick-view" style="display: none;">
+      <div class="qref-grid" id="faq-qref-grid"></div>
+    </div>
+
+  </div>
+  <!-- /mode-faq -->
+
+  <!-- ====== VIDEO MODE ====== -->
+  <div class="mode-panel" id="mode-video" role="tabpanel">
+
+    <div class="video-intro">
+      <div>
+        <div class="video-headline">The Official UltraTech Application Walkthrough.</div>
+        <p class="video-sub">A 4-minute, 33-second technical demonstration of the complete BWM application protocol - from substrate preparation to tile laying. Use it during Stage 0 WhatsApp introductions, Stage 1 in-person demos, and Stage 2 cohort meetings. Click any chapter below to jump to that section.</p>
+      </div>
+      <div class="video-meta-card">
+        <div class="vm-title">Reference</div>
+        <div class="vm-row"><span class="vm-label">Duration</span><span class="vm-value">4:33</span></div>
+        <div class="vm-row"><span class="vm-label">Source</span><span class="vm-value">UltraTech BPD</span></div>
+        <div class="vm-row"><span class="vm-label">Use case</span><span class="vm-value">Stages 0, 1, 2</span></div>
+        <div class="vm-row"><span class="vm-label">Hosted on</span><span class="vm-value">Vimeo</span></div>
+      </div>
+    </div>
+
+    <div class="video-player-wrap" id="video-player-wrap">
+      <iframe
+        id="vimeo-iframe"
+        src="https://player.vimeo.com/video/1190433065?h=&badge=0&autopause=0&player_id=0&app_id=58479"
+        frameborder="0"
+        allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+        allowfullscreen
+        title="BWM Application Walkthrough"
+        style="width:100%; height:100%; border:0;">
+      </iframe>
+      <div class="video-fallback-msg">
+        <i class="ti ti-wifi-off" aria-hidden="true"></i>
+        <p>The video could not be loaded. Make sure you have an internet connection - the video is streamed from Vimeo.</p>
+      </div>
+    </div>
+
+    <div class="chapter-section-title">Chapter markers</div>
+    <div class="chapters-grid" id="chapters-grid"></div>
+
+    <div class="video-cta-row">
+      <i class="ti ti-info-circle" aria-hidden="true"></i>
+      <span>Use the timestamped chapters above to skip directly to specific sections during a meeting. Pressing a chapter starts playback from that exact moment in the video.</span>
+    </div>
+
+  </div>
+  <!-- /mode-video -->
+
+  <!-- ====== 3D SAMPLE LAB MODE ====== -->
+  <div class="mode-panel" id="mode-demo" role="tabpanel">
+
+    <div class="demo-header">
+      <div class="demo-title">The water-pour demo, in 3D.</div>
+      <div class="demo-subtitle">A transparent glass with the BWM membrane sample resting over the opening. Pour water onto the sheet, then lift the membrane to reveal a bone-dry interior.</div>
+    </div>
+
+    <div class="demo-canvas-wrap">
+      <canvas id="bwm-canvas"></canvas>
+      <div class="bwm-hint">
+        <i class="ti ti-rotate-360" aria-hidden="true"></i>Drag to rotate
+      </div>
+      <div class="bwm-stage-badge">Stage 1 · Water-pour demo</div>
+    </div>
+
+    <div class="bwm-controls">
+      <button id="btn-pour" class="bwm-btn bwm-btn-primary"><i class="ti ti-droplet" aria-hidden="true"></i>Pour water</button>
+      <button id="btn-lift" class="bwm-btn"><i class="ti ti-arrow-up-right" aria-hidden="true"></i>Lift membrane</button>
+      <button id="btn-reset" class="bwm-btn"><i class="ti ti-refresh" aria-hidden="true"></i>Reset</button>
+    </div>
+
+    <div class="bwm-legend">
+      <div class="bwm-legend-item">
+        <span class="bwm-legend-swatch" style="background: #6b8aa8;"></span>BWM membrane sample
+      </div>
+      <div class="bwm-legend-item">
+        <span class="bwm-legend-swatch" style="background: #3b82f6; opacity: 0.7;"></span>Water - stays above
+      </div>
+      <div class="bwm-legend-item">
+        <span class="bwm-legend-swatch" style="background: #e8e8e8; border: 0.5px solid var(--border-strong);"></span>Glass - stays dry
+      </div>
+    </div>
+
+    <div class="demo-context-card">
+      <div class="demo-context-card-title">The pitch in one line</div>
+      <div class="demo-context-card-text">
+        Pour the water. Lift the sheet. The glass is dry. <strong>That is what 10 years of warranty looks like.</strong> Run this demo before you say anything else about price.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ====== FIELD PITCHES MODE ====== -->
+  <div class="mode-panel active" id="mode-pitches" role="tabpanel">
+
+    <!-- Inner segment tabs (matches vp-tabs visual pattern) -->
+    <div class="vp-tabs" role="tablist" id="pitch-segment-tabs">
+      <button class="vp-tab active" data-pitch-seg="architects" role="tab"><i class="ti ti-ruler" aria-hidden="true"></i>Architects &middot; 3</button>
+      <button class="vp-tab" data-pitch-seg="tilers" role="tab"><i class="ti ti-tools" aria-hidden="true"></i>Tilers &middot; 3</button>
+      <button class="vp-tab" data-pitch-seg="wp" role="tab"><i class="ti ti-droplet" aria-hidden="true"></i>Waterproofers &middot; 2</button>
+      <button class="vp-tab" data-pitch-seg="cp" role="tab"><i class="ti ti-building-store" aria-hidden="true"></i>Channel Partners &middot; 2</button>
+    </div>
+
+    <!-- Segment heading + meta -->
+    <div class="pitch-section-head" id="pitch-section-head">
+      <h2 class="pitch-section-title">Architects</h2>
+      <div class="pitch-section-meta">HINDI &middot; 3 PITCHES</div>
+    </div>
+
+    <!-- Search bar -->
+    <div class="pitch-search-wrap">
+      <i class="ti ti-search pitch-search-icon" aria-hidden="true"></i>
+      <input type="text" id="pitch-search" class="pitch-search" placeholder="Search pitches by keyword&hellip;" aria-label="Search pitches">
+    </div>
+
+    <!-- Pitch list -->
+    <div class="pitch-list" id="pitch-list"></div>
+
+  </div>
+
+  <!-- /mode-demo -->
+
+  <!-- ====== SHARED FOOTER ====== -->
+  <div class="footer">
+    <span class="footer-mark">UltraTech BPD · Confidential</span>
+    <span>Bathroom Waterproofing Membrane</span>
+  </div>
+
+</div>
+
+<!-- ====== PITCH MODAL ====== -->
+<div class="pitch-modal-overlay" id="pitch-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="pitch-modal-title">
+  <div class="pitch-modal" id="pitch-modal">
+    <div class="pitch-modal-head" id="pitch-modal-head">
+      <!-- populated by JS -->
+    </div>
+    <div class="pitch-modal-body" id="pitch-modal-body">
+      <!-- populated by JS -->
+    </div>
+    <div class="pitch-modal-print">
+      <button type="button" class="pitch-modal-print-btn" id="pitch-modal-print-btn">
+        <i class="ti ti-printer" aria-hidden="true"></i>
+        <span>Print this card</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  // ============================================
+  // ============ MODE SWITCHING ================
+  // ============================================
+  const modeBtns = document.querySelectorAll('.mode-btn');
+  const modePanels = document.querySelectorAll('.mode-panel');
+  let activeMode = 'pitches';
+
+  // Scroll-fade indicator: remove fade once user has scrolled the tab strip
+  // all the way to its end (signals "no more tabs hidden")
+  function attachScrollEndDetector(el) {
+    if (!el) return;
+    const update = function() {
+      const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 2;
+      el.classList.toggle('scrolled-end', atEnd || el.scrollWidth <= el.clientWidth + 2);
+    };
+    el.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    // initial check on next frame so layout is settled
+    requestAnimationFrame(update);
+  }
+  attachScrollEndDetector(document.querySelector('.mode-switcher'));
+  document.querySelectorAll('.vp-tabs').forEach(attachScrollEndDetector);
+  // Re-check vp-tabs whenever value-props mode is activated (panel was display:none)
+  const recheckVpTabs = function() {
+    document.querySelectorAll('.vp-tabs').forEach(function(el) {
+      const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 2;
+      el.classList.toggle('scrolled-end', atEnd || el.scrollWidth <= el.clientWidth + 2);
+    });
+  };
+
+  modeBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      const target = btn.dataset.mode;
+      activeMode = target;
+      modeBtns.forEach(function(b) { b.classList.toggle('active', b === btn); });
+      modePanels.forEach(function(p) {
+        p.classList.toggle('active', p.id === 'mode-' + target);
+      });
+      // Pause the Vimeo video if switching away from video mode
+      if (target !== 'video') {
+        const iframe = document.getElementById('vimeo-iframe');
+        if (iframe && iframe.contentWindow) {
+          iframe.contentWindow.postMessage('{"method":"pause"}', '*');
+        }
+      }
+      // Fix: force VP grid to recalculate layout when its panel becomes active
+      // (CSS Grid auto-fit doesn't compute properly when parent was display:none)
+      if (target === 'vp') {
+        // Always open the Universal sub-tab when entering Value Propositions
+        if (typeof resetVpToUniversal === 'function') {
+          resetVpToUniversal();
+        }
+        const vpGrid = document.getElementById('cards-grid');
+        if (vpGrid) {
+          // Reading offsetHeight forces a reflow now that display:block is set
+          void document.getElementById('mode-vp').offsetHeight;
+          // Re-render with the correct width available
+          if (typeof renderCards === 'function') {
+            renderCards();
+          }
+        }
+        // vp-tabs were hidden so their scroll metrics were 0; re-check now
+        requestAnimationFrame(recheckVpTabs);
+      }
+      if (target === 'pitches') {
+        // audience-row vp-tabs may also have been hidden
+        requestAnimationFrame(recheckVpTabs);
+      }
+      // Scroll to top on mode switch
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  // ============================================
+  // ====== VALUE PROPS · INNER TABS ============
+  // ============================================
+  const vpAudienceTabs = document.querySelectorAll('#mode-vp .vp-tabs > .vp-tab');
+  const vpPanels = document.querySelectorAll('.vp-panel');
+  let activeVpTab = 'universal';
+
+  vpAudienceTabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      const target = tab.dataset.vpPanel;
+      activeVpTab = target;
+      vpAudienceTabs.forEach(function(t) { t.classList.toggle('active', t === tab); });
+      vpPanels.forEach(function(p) {
+        p.classList.toggle('active', p.id === 'vp-panel-' + target);
+      });
+    });
+  });
+
+  // Helper: force Universal as the default VP sub-tab whenever VP mode is entered
+  function resetVpToUniversal() {
+    activeVpTab = 'universal';
+    vpAudienceTabs.forEach(function(t) {
+      t.classList.toggle('active', t.dataset.vpPanel === 'universal');
+    });
+    vpPanels.forEach(function(p) {
+      p.classList.toggle('active', p.id === 'vp-panel-universal');
+    });
+  }
+
+  // ============================================
+  // ====== VALUE PROPS · UNIVERSAL CARDS =======
+  // ============================================
+  const props = [
+    {
+        "num": "01",
+        "icon": "ti-clock-bolt",
+        "name": "Time Saver",
+        "headline": "1 day, not weeks.",
+        "tagline": "From 7-14 days of waterproofing to 1 day of work.",
+        "fillColor": "#FAECE7",
+        "textTitle": "#712B13",
+        "textSub": "#993C1D",
+        "why": "Traditional waterproofing takes a bare minimum of 7-14 days, compared to BWM's 1-day setup. This saves time for both the applicator (who can take on multiple projects) and the homeowner (who gets the bathroom or wet zone ready within a day).",
+        "pitch30": "Traditional bathroom waterproofing takes 7 to 14 days minimum. Crack filling, bonding, first coat, cure, second coat, another cure, then tile. With BWM, the same job is done in one day. Apply Type 2 adhesive, place the membrane, let it bond overnight, apply adhesive again, lay tile within 30 minutes. Same waterproofing outcome with warranty backing, in one-tenth the time.",
+        "pitchHinglish": "",
+        "evidence": [],
+        "objections": [
+            {
+                "q": "Sounds too good to be true. How can 1 day match 7-14 days of waterproofing?",
+                "a": "The 7 days isn't waterproofing work - it's mostly waiting for cement coats to cure. BWM uses a polymer membrane that bonds in 24 hours flat, replacing the multi-coat cementitious system with a single watertight layer. The waterproofing outcome is the same - the time is saved on curing."
+            },
+            {
+                "q": "What if the membrane fails - can you really back this with a warranty?",
+                "a": "UltraTech gives a 10-year manufacturer warranty on the product directly."
+            },
+            {
+                "q": "My applicator team has never worked with this - won't they slow it down?",
+                "a": "Any applicator can do this. The protocol is 4 simple steps. The official UltraTech application video documents the exact sandwich method. We will also provide training."
+            }
+        ],
+        "whenToUse": [
+            {
+                "do": true,
+                "text": "<strong>Lead with this in every architect meeting.</strong> It's the validated opening hook across all 10 architect conversations."
+            },
+            {
+                "do": true,
+                "text": "<strong>Lead with this when pitching to homeowners</strong> through any channel. Time is what they understand intuitively; \u20b9/sqft they don't."
+            },
+            {
+                "do": true,
+                "text": "<strong>Lead with this at the CP counter</strong> when a customer asks <em>kitne din lagega?</em> - it's a one-line answer no cementitious competitor can match."
+            },
+            {
+                "do": true,
+                "text": "<strong>Use in repair pitches.</strong>"
+            }
+        ]
+    },
+    {
+        "num": "02",
+        "icon": "ti-shield-check",
+        "name": "10-Year Warranty",
+        "headline": "Backed by UltraTech.",
+        "tagline": "One of the only two products that UltraTech gives a warranty on.",
+        "fillColor": "#E1F5EE",
+        "textTitle": "#085041",
+        "textSub": "#0F6E56",
+        "why": "One of only two UltraTech products with a manufacturer warranty. No other major waterproofing product in the market offers a comparable manufacturer-backed warranty.",
+        "pitch30": "This is one of only two UltraTech products with a manufacturer's warranty. Mention no other major waterproofing products in the market offer a warranty.",
+        "pitchHinglish": "",
+        "evidence": [],
+        "objections": [],
+        "whenToUse": [
+            {
+                "do": true,
+                "text": "<strong>Lead when pitching architects with premium institutional clients.</strong>"
+            },
+            {
+                "do": true,
+                "text": "<strong>Lead at the CP counter</strong> when a homeowner asks \"guarantee\" before price."
+            },
+            {
+                "do": true,
+                "text": "<strong>Pair with Card 01 for mid-to-premium homeowners.</strong>"
+            },
+            {
+                "do": true,
+                "text": "<strong>Always have the physical warranty document with you.</strong>"
+            }
+        ]
+    },
+    {
+        "num": "03",
+        "icon": "ti-home-shield",
+        "name": "Complete Home Envelope",
+        "headline": "If there's a tile, there's a sheet.",
+        "tagline": "Walls, floors, repair, balcony, roof - all covered.",
+        "fillColor": "#E1F5EE",
+        "textTitle": "#085041",
+        "textSub": "#0F6E56",
+        "why": "BWM uses the identical sandwich method on every surface where a tile exists.",
+        "pitch30": "BWM uses the identical sandwich method on every tile-bonded surface in the home - bathroom floor, bathroom walls, balcony, terrace, repair, new build. No need for different waterproofing systems in different parts of the bathroom. One product, one protocol, one 10-year warranty across the entire wet-area envelope of the home.",
+        "pitchHinglish": "",
+        "evidence": [],
+        "objections": [
+            {
+                "q": "Will it really work on the walls? Most waterproofing is floor-only.",
+                "a": "Yes. The sandwich method works vertically because the adhesive is the bonding element."
+            },
+            {
+                "q": "What about terraces? Can it handle rain and direct sun?",
+                "a": "Yes, works on close-tiled roofs."
+            },
+            {
+                "q": "My bathroom has a 100mm nani trap. Will the membrane fit around that?",
+                "a": "Core cut filled with BWM-compatible adhesive up to 10-15mm; membrane wraps around perimeter with the same overlap protocol."
+            }
+        ],
+        "whenToUse": [
+            {
+                "do": true,
+                "text": "<strong>Lead when architects raise the balcony or terrace use case.</strong>"
+            },
+            {
+                "do": true,
+                "text": "<strong>Pair with Card 02 for multi-area renovation projects.</strong>"
+            },
+            {
+                "do": true,
+                "text": "<strong>Be ready with the nali / floor trap answer.</strong>"
+            }
+        ]
+    },
+    {
+        "num": "04",
+        "icon": "ti-arrow-back-up",
+        "name": "The Reverse Pitch",
+        "headline": "\u20b920k today. Or 2-3x the cost later.",
+        "tagline": "Pay now. Or pay more later.",
+        "fillColor": "#FAECE7",
+        "textTitle": "#712B13",
+        "textSub": "#993C1D",
+        "why": "Loss aversion converts mid-tier homeowners faster than a normal pitch. 5-7 year traditional waterproofing failure produces tile demolition + plumbing + civil restoration totalling high costs.",
+        "pitch30": "When traditional waterproofing fails, the homeowner pays for tile demolition, plumbing rework, civil restoration, new waterproofing - typically 2-3 times the original waterproofing cost. BWM costs \u20b97,500 per roll today, with a 10-year manufacturer warranty.",
+        "pitchHinglish": "",
+        "evidence": [],
+        "objections": [],
+        "whenToUse": [
+            {
+                "do": true,
+                "text": "<strong>Lead at the CP counter for walk-in repair customers.</strong>"
+            },
+            {
+                "do": true,
+                "text": "<strong>Use with homeowners who have had a previous waterproofing failure</strong> in their or their family's home."
+            },
+            {
+                "do": true,
+                "text": "<strong>Pair with Card 01 for renovation contexts.</strong>"
+            },
+            {
+                "do": true,
+                "text": "<strong>Pair with Card 02 for premium homeowners.</strong>"
+            }
+        ]
+    },
+    {
+        "num": "05",
+        "icon": "ti-stack-2",
+        "name": "Simpler Protocol",
+        "headline": "Four steps. One Applicator.",
+        "tagline": "Replaces 7-8 traditional steps with a clean sandwich method.",
+        "fillColor": "#FAECE7",
+        "textTitle": "#712B13",
+        "textSub": "#993C1D",
+        "why": "The traditional method takes around 7-8 sequenced steps over 7-14 days, whereas BWM application takes just over 24 hours start to finish.",
+        "pitch30": "Traditional waterproofing takes 7-8 sequenced steps spread over 7-14 days. BWM compresses this to 4 simple steps over 24-30 hours: adhesive, membrane, adhesive, tile. Any applicator can execute it - no specialist waterproofing trade required. The official UltraTech video documents the exact protocol.",
+        "pitchHinglish": "",
+        "evidence": [],
+        "objections": [
+            {
+                "q": "My applicator team has never seen this product. Won't they get it wrong?",
+                "a": "4-step protocol documented in official video. Training provided before first site."
+            },
+            {
+                "q": "What if the applicator misses an overlap or doesn't bond properly?",
+                "a": "Overlap is 5-6 cm at the membrane seams, secured with Type 2 adhesive."
+            }
+        ],
+        "whenToUse": [
+            {
+                "do": true,
+                "text": "<strong>Pair with Card 01 (Time Saver)</strong> - the 1-day claim is <em>because</em> of the simpler protocol."
+            },
+            {
+                "do": true,
+                "text": "<strong>Lead when architects raise applicator training concerns</strong> (e.g., Aakriti, The Creators in Chandigarh)."
+            },
+            {
+                "do": true,
+                "text": "<strong>Use when pitching tilers and in-house teams.</strong>"
+            },
+            {
+                "do": true,
+                "text": "<strong>Use with channel partners who handle walk-in repair customers.</strong>"
+            }
+        ]
+    },
+    {
+        "num": "06",
+        "icon": "ti-certificate",
+        "name": "International Standards",
+        "headline": "Specifier-grade certification.",
+        "tagline": "EN 1928 \u00b7 EN 12311-2 \u00b7 ANSI A118.12 \u00b7 EN 1328.",
+        "fillColor": "#EEEDFE",
+        "textTitle": "#26215C",
+        "textSub": "#3C3489",
+        "why": "The architect's specification language.",
+        "pitch30": "BWM is certified to four international standards that architects use as the gatekeeper language for BOQ inclusion: EN 1928 for watertightness, EN 12311-2 for tensile strength and elongation, ANSI A118.12 for crack isolation, and EN 1328 for adhesion. These four certifications are what get BWM specified into BOQs alongside Sika, Dr Fixit, MYK, and Fosroc. UltraTech's cement-grade brand credibility extends to BWM through these certifications.",
+        "pitchHinglish": "",
+        "evidence": [],
+        "objections": [],
+        "whenToUse": [
+            {
+                "do": true,
+                "text": "<strong>Lead when pitching architects targeting BOQ specification.</strong>"
+            },
+            {
+                "do": true,
+                "text": "<strong>Use with technically-oriented architects.</strong>"
+            },
+            {
+                "do": true,
+                "text": "<strong>Always pair with a physical TDS sheet handoff.</strong>"
+            }
+        ]
+    }
+];
+
+  const grid = document.getElementById('cards-grid');
+  const detail = document.getElementById('detail-panel');
+  const showAllBtn = document.getElementById('show-all-btn');
+
+  let activeIdx = -1;
+  let allMode = false;
+
+  function renderCards() {
+    grid.innerHTML = '';
+    props.forEach(function(p, idx) {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.dataset.idx = idx;
+      card.style.background = p.fillColor;
+      card.style.borderColor = (idx === activeIdx) ? p.textTitle : 'transparent';
+
+      card.innerHTML =
+        '<div class="card-top">' +
+          '<i class="ti ' + p.icon + '" aria-hidden="true" style="font-size: 26px; line-height: 1; color: ' + p.textTitle + ';"></i>' +
+          '<span class="card-num" style="color: ' + p.textSub + ';">' + p.num + '</span>' +
+        '</div>' +
+        '<div>' +
+          '<div class="card-name" style="color: ' + p.textSub + ';">' + p.name + '</div>' +
+          '<div class="card-headline" style="color: ' + p.textTitle + ';">' + p.headline + '</div>' +
+          '<div class="card-tagline" style="color: ' + p.textSub + ';">' + p.tagline + '</div>' +
+        '</div>' +
+        '<button type="button" class="card-pitch-btn" data-pitch-idx="' + idx + '" style="color: ' + p.textTitle + ';" aria-label="Open pitch view for ' + p.name + '">' +
+          '<i class="ti ti-presentation" aria-hidden="true"></i>' +
+          '<span>Pitch view</span>' +
+        '</button>';
+
+      card.addEventListener('mouseenter', function() {
+        if (!allMode) showDetail(idx);
+      });
+      card.addEventListener('click', function(e) {
+        // Pitch button clicks bubble up; handle them separately
+        if (e.target.closest('.card-pitch-btn')) {
+          e.stopPropagation();
+          openPitchModal(idx);
+          return;
+        }
+        if (allMode) {
+          allMode = false;
+          showAllBtn.innerHTML = '<i class="ti ti-eye" aria-hidden="true" style="font-size: 14px;"></i>Show all evidence';
+        }
+        showDetail(idx);
+      });
+
+      grid.appendChild(card);
+    });
+  }
+
+  function showDetail(idx) {
+    activeIdx = idx;
+    const p = props[idx];
+    detail.style.borderLeftColor = p.textTitle;
+    detail.innerHTML =
+      '<div class="detail-header">' +
+        '<i class="ti ' + p.icon + '" aria-hidden="true" style="font-size: 20px; color: ' + p.textTitle + ';"></i>' +
+        '<span class="detail-eyebrow" style="color: ' + p.textSub + ';">' + p.num + ' \u00B7 ' + p.name + ' \u00B7 why we chose it</span>' +
+      '</div>' +
+      '<p class="detail-text">' + p.why + '</p>';
+
+    Array.from(grid.children).forEach(function(c, i) {
+      c.classList.toggle('active', i === idx);
+      c.style.borderColor = (i === idx) ? props[i].textTitle : 'transparent';
+    });
+  }
+
+  function showAll() {
+    allMode = true;
+    showAllBtn.innerHTML = '<i class="ti ti-x" aria-hidden="true" style="font-size: 14px;"></i>Hide';
+    let html =
+      '<div class="detail-header">' +
+        '<i class="ti ti-list-details" aria-hidden="true" style="font-size: 20px; color: var(--accent-coral);"></i>' +
+        '<span class="detail-eyebrow" style="color: var(--text-muted);">All six \u00B7 field evidence</span>' +
+      '</div>';
+
+    props.forEach(function(p) {
+      html +=
+        '<div style="margin-bottom: 18px; padding-bottom: 18px; border-bottom: 0.5px solid var(--border);">' +
+          '<div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">' +
+            '<i class="ti ' + p.icon + '" aria-hidden="true" style="font-size: 16px; color: ' + p.textTitle + ';"></i>' +
+            '<span style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: ' + p.textSub + ';">' + p.num + ' \u00B7 ' + p.name + '</span>' +
+          '</div>' +
+          '<p style="font-size: 14px; line-height: 1.65; color: var(--text);">' + p.why + '</p>' +
+        '</div>';
+    });
+
+    detail.innerHTML = html;
+    detail.style.borderLeftColor = 'var(--accent-coral)';
+
+    Array.from(grid.children).forEach(function(c) {
+      c.classList.remove('active');
+      c.style.borderColor = 'transparent';
+    });
+    activeIdx = -1;
+  }
+
+  function resetUniversal() {
+    allMode = false;
+    activeIdx = -1;
+    showAllBtn.innerHTML = '<i class="ti ti-eye" aria-hidden="true" style="font-size: 14px;"></i>Show all evidence';
+    detail.style.borderLeftColor = 'var(--accent-coral)';
+    detail.innerHTML =
+      '<div class="detail-header">' +
+        '<i class="ti ti-info-circle" aria-hidden="true" style="font-size: 18px; color: var(--accent-coral);"></i>' +
+        '<span class="detail-eyebrow" style="color: var(--text-muted);">Field evidence</span>' +
+      '</div>' +
+      '<p class="detail-empty">Hover any card above to preview the evidence behind it. Click to lock it in. Use "Show all evidence" to see the complete field-backing.</p>';
+    Array.from(grid.children).forEach(function(c) {
+      c.classList.remove('active');
+      c.style.borderColor = 'transparent';
+    });
+  }
+
+  showAllBtn.addEventListener('click', function() {
+    if (allMode) resetUniversal();
+    else showAll();
+  });
+
+  renderCards();
+
+  // ============================================
+  // ========== PITCH MODAL LOGIC ===============
+  // ============================================
+  const pitchOverlay = document.getElementById('pitch-modal-overlay');
+  const pitchHead = document.getElementById('pitch-modal-head');
+  const pitchBody = document.getElementById('pitch-modal-body');
+  const pitchPrintBtn = document.getElementById('pitch-modal-print-btn');
+
+  function openPitchModal(idx) {
+    const p = props[idx];
+
+    pitchHead.innerHTML =
+      '<div class="pitch-modal-icon" style="background: ' + p.fillColor + ';">' +
+        '<i class="ti ' + p.icon + '" aria-hidden="true" style="color: ' + p.textTitle + ';"></i>' +
+      '</div>' +
+      '<div class="pitch-modal-titles">' +
+        '<div class="pitch-modal-eyebrow" style="color: ' + p.textSub + ';">Universal #' + p.num + ' \u00B7 ' + p.name + '</div>' +
+        '<h2 class="pitch-modal-title" id="pitch-modal-title">' + p.headline + '</h2>' +
+        '<div class="pitch-modal-tagline">' + p.tagline + '</div>' +
+      '</div>' +
+      '<button type="button" class="pitch-modal-close" id="pitch-modal-close" aria-label="Close pitch view">' +
+        '<i class="ti ti-x" aria-hidden="true"></i>' +
+      '</button>';
+
+    // Evidence section
+    let evidenceHtml = '';
+    p.evidence.forEach(function(e) {
+      evidenceHtml += '<div class="pitch-evidence"><strong>' + e.label + '</strong>' + e.text + '</div>';
+    });
+    const evidenceBlock = (p.evidence && p.evidence.length > 0)
+      ? '<div class="pitch-section">' +
+          '<div class="pitch-section-label">' +
+            '<i class="ti ti-database" aria-hidden="true"></i>' +
+            '<span>The proof point</span>' +
+          '</div>' +
+          evidenceHtml +
+        '</div>'
+      : '';
+
+    // Objections section
+    let objectionsHtml = '';
+    p.objections.forEach(function(o) {
+      objectionsHtml +=
+        '<div class="pitch-objection">' +
+          '<div class="pitch-objection-q">' + o.q + '</div>' +
+          '<div class="pitch-objection-a">' + o.a + '</div>' +
+        '</div>';
+    });
+    const objectionsBlock = (p.objections && p.objections.length > 0)
+      ? '<div class="pitch-section">' +
+          '<div class="pitch-section-label">' +
+            '<i class="ti ti-message-circle-question" aria-hidden="true"></i>' +
+            '<span>Field-tested objections + responses</span>' +
+          '</div>' +
+          objectionsHtml +
+        '</div>'
+      : '';
+
+    // When to use section
+    let whenHtml = '<ul class="pitch-when-list">';
+    p.whenToUse.forEach(function(w) {
+      whenHtml += '<li' + (w.do ? '' : ' class="dont"') + '>' + w.text + '</li>';
+    });
+    whenHtml += '</ul>';
+
+    pitchBody.innerHTML =
+      '<div class="pitch-section">' +
+        '<div class="pitch-section-label">' +
+          '<i class="ti ti-microphone-2" aria-hidden="true"></i>' +
+          '<span>The 30-second pitch</span>' +
+        '</div>' +
+        '<div class="pitch-30sec">' + p.pitch30 + '</div>' +
+        (p.pitchHinglish ?
+        '<div class="pitch-hinglish">' +
+          '<strong>Sample line</strong>' +
+          p.pitchHinglish +
+        '</div>' : '') +
+      '</div>' +
+      evidenceBlock +
+      objectionsBlock +
+      '<div class="pitch-section">' +
+        '<div class="pitch-section-label">' +
+          '<i class="ti ti-target-arrow" aria-hidden="true"></i>' +
+          '<span>When to use this card</span>' +
+        '</div>' +
+        whenHtml +
+      '</div>';
+
+    pitchOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+
+    // Wire up the close button (it's recreated each time)
+    document.getElementById('pitch-modal-close').addEventListener('click', closePitchModal);
+  }
+
+  function closePitchModal() {
+    pitchOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Close on overlay click (but not modal click)
+  pitchOverlay.addEventListener('click', function(e) {
+    if (e.target === pitchOverlay) closePitchModal();
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && pitchOverlay.classList.contains('open')) {
+      closePitchModal();
+    }
+  });
+
+  // Print handler
+  pitchPrintBtn.addEventListener('click', function() {
+    document.body.classList.add('pitch-printing');
+    window.print();
+    setTimeout(function() {
+      document.body.classList.remove('pitch-printing');
+    }, 1000);
+  });
+
+  // ============================================
+  // ============ FAQ DATA ======================
+  // ============================================
+  const sections = [
+    {
+      id: 's1',
+      label: 'Basic Product Questions',
+      icon: 'ti-info-circle',
+      questions: [
+        {
+          num: 'Q1',
+          q: 'What is the Bathroom Waterproofing Membrane?',
+          a: '<p>It is a high-performance sheet-format membrane made of <strong>EVA (Ethylene Vinyl Acetate) copolymer</strong> with non-woven polyester fabric on both sides. Designed for indoor waterproofing applications, especially in wet areas like bathrooms, kitchens, roofs, and wet zones.</p><p>The membrane is a single-layer application that gets sandwiched between the substrate and the tile. The product is European in origin and new to the Indian market.</p>'
+        },
+        {
+          num: 'Q2',
+          q: 'Who is supposed to apply it?',
+          a: '<p>Any applicator - be it <strong>waterproofers or tilers</strong>.</p>'
+        },
+        {
+          num: 'Q3',
+          q: 'What is the curing time before tiles can be laid?',
+          a: '<p>The membrane needs to be left for at least <strong>24 hours</strong> so it can bind itself with the adhesive. After that, the adhesive can be re-applied and tiles can be put over it.</p>'
+        },
+        {
+          num: 'Q4',
+          q: 'Which materials is the membrane compatible with?',
+          a: '<p>Compatibility with <strong>ceramic, porcelain, vitrified tiles, and natural stone</strong>.</p>'
+        },
+        {
+          num: 'Q5',
+          q: 'What is the thickness of the sheet?',
+          a: '<p><strong>0.5-0.6 mm</strong>.</p>'
+        },
+        {
+          num: 'Q6',
+          q: 'What layers are exactly there in this sheet?',
+          a: '<p>It is a <strong>waterproof elastic geotextile membrane</strong>. Formed by a double sheet of thermoplastic polyoefin and coated on both sides of non-woven synthetic fibres.</p>'
+        }
+      ]
+    },
+    {
+      id: 's2',
+      label: 'Where the Product Works - and Where It Does Not',
+      icon: 'ti-map-pin',
+      questions: [
+        {
+          num: 'Q7',
+          q: 'Where can the membrane be installed?',
+          a: '<p>Bathrooms, kitchens, and wet zones - both walls and floors. Compatible with ceramic, porcelain, vitrified tiles, and natural stone. Can also be used on <strong>roofs with closed tiles</strong>.</p>'
+        },
+        {
+          num: 'Q8',
+          q: 'Can the membrane be used on open-to-sun terraces?',
+          a: '<p>For roof-side applications, only <strong>closed-tile roofs</strong> are viable.</p>'
+        },
+        {
+          num: 'Q9',
+          q: 'Can it be used on water tanks or swimming pools?',
+          a: '<p>Currently, the application is <strong>not recommended</strong> for these use cases.</p>'
+        },
+        {
+          num: 'Q10',
+          q: 'Can it solve sunken-bathroom waterproofing?',
+          a: '<p><strong>Yes.</strong> A sunken bathroom still requires its depth to be filled separately, regardless of whether the membrane is applied. The membrane provides a watertight seal once the sunken portion has been filled to grade.</p>'
+        },
+        {
+          num: 'Q11',
+          q: 'Can the membrane be used for repair/retrofit projects?',
+          a: '<p><strong>Yes.</strong> Repair is the best use case - it can be fixed in a single day instead of waiting multiple days under traditional cementitious methods.</p>'
+        },
+        {
+          num: 'Q12',
+          q: 'Has the membrane been roof-stress-tested?',
+          a: '<p><strong>Yes</strong>, this concept and sheet has been validated by various roof use cases abroad.</p>'
+        }
+      ]
+    },
+    {
+      id: 's3',
+      label: 'Official Application Protocol',
+      icon: 'ti-tools',
+      questions: [
+        {
+          num: 'Q13',
+          q: 'What are the substrate-side preparation steps?',
+          a: '<p>Clean the surface using suitable methods such as <strong>wire brush, water jetting, or mopping</strong>. Ensure the substrate is clean, dust-free, and stable before proceeding.</p>'
+        },
+        {
+          num: 'Q14',
+          q: 'How should the tile adhesive be mixed?',
+          a: '<p>Add <strong>UltraTech Tilefixo Type 2 and above</strong> tile adhesive to a measured quantity of water while continuously stirring using a mechanical stirrer for <strong>2-3 minutes</strong> to ensure consistency free of lumps.</p><p>Allow the mix to stand for <strong>2 minutes</strong> to mature, then mix it again briefly before use.</p>'
+        },
+        {
+          num: 'Q15',
+          q: 'What size notched trowel should be used?',
+          a: '<p><strong>6mm notched trowel.</strong></p>'
+        },
+        {
+          num: 'Q16',
+          q: 'What is the official membrane installation protocol?',
+          a: '<ol class="step-list"><li><strong>Cut the membrane.</strong> Cut the WeatherPro membrane sheet as per the bathroom area requirement. The membrane has a printed grid pattern that aids measurement.</li><li><strong>Apply the adhesive.</strong> Apply the mixed Tilefixo Type 2 (or above) adhesive to the prepared substrate using the 6mm notched trowel. Achieve minimum 3mm bed thickness.</li><li><strong>Fix the membrane.</strong> Fix the membrane over the fresh tile adhesive with 5-10 cm overlap between adjacent sheets.</li><li><strong>Press and roll.</strong> Press and roll the membrane with the Tilefixo Floater for better adhesion and to ensure 100% contact between the membrane and tile adhesive.</li><li><strong>Seal all edges.</strong> Fill all cutting edges, end laps, terminating ends, overlaps, and gaps with tile adhesive.</li><li><strong>Drain and pipe penetrations.</strong> Cut the membrane to fit around the penetration. The application video demonstrates this cutting protocol explicitly.</li></ol>'
+        },
+        {
+          num: 'Q17',
+          q: 'What is the overlap distance between membrane sheets?',
+          a: '<p><strong>5 to 10 cm</strong> is the official UltraTech specification.</p>'
+        },
+        {
+          num: 'Q18',
+          q: 'What is the tile-installation protocol over the membrane?',
+          a: '<p>Clean the membrane surface to remove bond-inhibiting agents, dust, or other particles before applying the second adhesive layer.</p><p>Apply Tilefixo Type 2 and above tile adhesive on the membrane using an appropriately sized notched trowel. Achieve minimum <strong>3mm bed thickness</strong>; for best results, back-butter the tile to maintain <strong>6mm of bed thickness</strong> before tile laying.</p><p>Lay tiles onto the adhesive, gently pressing each tile and moving in perpendicular direction to the trowel notches to ensure no air cavity remains. Do not disturb tiles until the adhesive has set.</p><p>For vertical surface applications, tile laying starts <strong>from bottom to top</strong>.</p>'
+        },
+        {
+          num: 'Q19',
+          q: 'What is the critical 30-minute window?',
+          a: '<p>Tiles must be fixed within <strong>30 minutes</strong> of spreading Tilefixo Type 2 (or above) tile adhesive to achieve adequate bonding. Any tile fixing after 30 minutes will lead to improper adhesion and may result in de-bonding of tiles.</p><p>This 30-minute working window is one of the most important application-protocol requirements - it sets the pace at which the applicator and labour must work and directly affects how project schedules are planned.</p>'
+        },
+        {
+          num: 'Q20',
+          q: 'What companion products are required for installation?',
+          a: '<ul><li><strong>Tilefixo Type 2 (or above) tile adhesive</strong> - the bonding agent on both sides of the membrane (per EN 12004 / IS 15477)</li><li><strong>Tilefixo Floater</strong> - used to press and roll the membrane into the adhesive for 100% contact</li><li><strong>Tilefixo Spacer</strong> - used during tile fixing to ensure uniform tile joints</li><li><strong>UltraTech Tilefixo STYLE Epoxy Grout</strong> - for filling tile joints</li><li><strong>UltraTech Tilefixo CG Grout</strong> - for filling tile joints</li></ul>'
+        },
+        {
+          num: 'Q21',
+          q: 'How is the membrane installed around drains and pipes?',
+          a: '<p>Cut the membrane to fit around the drain or pipe penetration. Edges are pressed down. Overlapping pieces are filled with tile adhesive at all cut edges, end laps, terminating ends, and gaps.</p>'
+        },
+        {
+          num: 'Q22',
+          q: 'Can the membrane be applied on bathroom walls in addition to floors?',
+          a: '<p><strong>Yes.</strong> Application on both walls and floors is possible.</p>'
+        }
+      ]
+    },
+    {
+      id: 's4',
+      label: 'Technical Specifications',
+      icon: 'ti-certificate',
+      questions: [
+        {
+          num: 'Q23',
+          q: 'What are the official technical specifications?',
+          a: '<p>The UltraTech WeatherPro brochure formally documents the following:</p><table class="spec-table"><thead><tr><th>Property</th><th>Value</th><th>Standard</th></tr></thead><tbody><tr><td class="spec-name">Watertightness</td><td class="spec-value">Pass</td><td class="spec-standard">EN 1928</td></tr><tr><td class="spec-name">Tensile Strength</td><td class="spec-value">\u2265 200 N/50mm</td><td class="spec-standard">EN 12311-2</td></tr><tr><td class="spec-name">Elongation</td><td class="spec-value">\u2265 50% / \u2265 80%</td><td class="spec-standard">EN 12311-2</td></tr><tr><td class="spec-name">Crack Bridging</td><td class="spec-value">&gt; 3 mm</td><td class="spec-standard">ANSI A118.12</td></tr><tr><td class="spec-name">Adhesion to Membrane</td><td class="spec-value">\u2265 0.5 N/mm\u00B2</td><td class="spec-standard">EN 1328</td></tr><tr><td class="spec-name">Shear Strength</td><td class="spec-value">\u2265 1 N/mm\u00B2</td><td class="spec-standard">EN 1324</td></tr><tr><td class="spec-name">Service Temperature</td><td class="spec-value">\u221220\u00B0C to +80\u00B0C</td><td class="spec-standard">-</td></tr></tbody></table>'
+        }
+      ]
+    },
+    {
+      id: 's5',
+      label: 'Warranty & Liability',
+      icon: 'ti-shield-check',
+      questions: [
+        {
+          num: 'Q24',
+          q: 'What does the warranty cover?',
+          a: '<p>The UltraTech WeatherPro Bathroom Waterproofing Membrane warranty is governed by a specific set of clauses. Five things to know:</p>' +
+             '<ol class="warranty-list">' +
+               '<li><strong>What product is covered.</strong> The warranty covers the UltraTech WeatherPro Bathroom Waterproofing Membrane, applied <strong>only in bathrooms</strong>. Any other application area (balcony, terrace, kitchen, etc.) is outside scope. <span class="clause-ref">Clause 1.2: "The Warranty is applicable only if the Product applied in the Bathroom."</span></li>' +
+               '<li><strong>What duration is covered.</strong> 10 years (120 months) from the <strong>Date of Purchase</strong> \u2014 not date of application. Date of Purchase = invoice date; if multiple invoices, the first invoice date. <span class="clause-ref">Clause 1.1 (warranty period) and Clause 9.3 (definition of Date of Purchase).</span></li>' +
+               '<li><strong>What type of failure is covered.</strong> Only two specific failure modes qualify as "Failure" under the warranty: (a) Water ingress through the membrane, or (b) Product coming off from the adhesive. Nothing else counts as a warranty-triggering failure. <span class="clause-ref">Clause 9.4: Definition of Failure.</span></li>' +
+               '<li><strong>What the warranty is limited to \u2014 only manufacturing defects.</strong> The warranty covers only <strong>manufacturing defects</strong> of the Product. It does not cover any failure arising from application, workmanship, surface preparation, structural issues, or external factors. <span class="clause-ref">Clause 5.2: "The Warranty will cover only manufacturing defects of the Product and will not cover any defects arising out of factors out of the control of the Company..."</span></li>' +
+               '<li><strong>What UltraTech is liable to provide.</strong> The company\'s maximum liability is <strong>replacement product only</strong> \u2014 i.e., fresh membrane sufficient to redo the failed portion. UltraTech does not pay for labour, applicator charges, demolition, re-tiling, or any consequential damages. <span class="clause-ref">Clauses 1.3 and 7.1 (replacement-only liability); Clause 7.4 (no direct/indirect/consequential damages).</span></li>' +
+             '</ol>'
+        }
+      ]
+    }
+  ];
+
+  const allQuestions = [];
+  sections.forEach(function(section) {
+    section.questions.forEach(function(q) {
+      allQuestions.push({
+        num: q.num,
+        q: q.q,
+        a: q.a,
+        tbd: q.tbd || false,
+        sectionId: section.id,
+        sectionLabel: section.label,
+        sectionIcon: section.icon
+      });
+    });
+  });
+
+  // FAQ DOM
+  const faqSidebar = document.getElementById('faq-sidebar');
+  const faqReadingPane = document.getElementById('faq-reading-pane');
+  const faqSearchInput = document.getElementById('faq-search-input');
+  const faqSearchClear = document.getElementById('faq-search-clear');
+  const faqSearchStats = document.getElementById('faq-search-stats');
+  const faqDetailedView = document.getElementById('faq-detailed-view');
+  const faqQuickView = document.getElementById('faq-quick-view');
+  const faqQrefGrid = document.getElementById('faq-qref-grid');
+  const faqViewBtns = document.querySelectorAll('.faq-view-btn');
+
+  let activeQNum = 'Q1';
+  let currentSearchTerm = '';
+
+  function renderFaqSidebar() {
+    faqSidebar.innerHTML = '';
+    sections.forEach(function(section) {
+      const group = document.createElement('div');
+      group.className = 'faq-section-group';
+      group.dataset.sectionId = section.id;
+
+      const header = document.createElement('div');
+      header.className = 'faq-section-header';
+      header.innerHTML =
+        '<i class="ti ' + section.icon + '" aria-hidden="true"></i>' +
+        '<span>' + section.label + '</span>' +
+        '<span class="count">' + section.questions.length + '</span>';
+      group.appendChild(header);
+
+      section.questions.forEach(function(q) {
+        const item = document.createElement('button');
+        item.type = 'button';
+        item.className = 'faq-question-item';
+        if (q.num === activeQNum) item.classList.add('active');
+        item.dataset.qnum = q.num;
+        item.innerHTML =
+          '<span class="q-num">' + q.num + '</span>' +
+          '<span class="q-text">' + q.q + '</span>';
+        item.addEventListener('click', function() {
+          showQuestion(q.num);
+        });
+        group.appendChild(item);
+      });
+
+      faqSidebar.appendChild(group);
+    });
+  }
+
+  function showQuestion(qnum) {
+    activeQNum = qnum;
+    const item = allQuestions.find(function(x) { return x.num === qnum; });
+    if (!item) return;
+
+    let metaHtml =
+      '<span class="meta-pill">' + item.num + '</span>' +
+      '<span class="meta-pill section">' + item.sectionLabel + '</span>';
+    if (item.tbd) {
+      metaHtml += '<span class="meta-pill tbd"><i class="ti ti-alert-circle" style="font-size: 12px;" aria-hidden="true"></i>Pending policy review</span>';
+    }
+
+    faqReadingPane.innerHTML =
+      '<div class="reading-meta">' + metaHtml + '</div>' +
+      '<h2 class="question-title">' + item.q + '</h2>' +
+      '<div class="answer-body">' + item.a + '</div>';
+
+    Array.from(faqSidebar.querySelectorAll('.faq-question-item')).forEach(function(el) {
+      el.classList.toggle('active', el.dataset.qnum === qnum);
+    });
+
+    const activeEl = faqSidebar.querySelector('.faq-question-item.active');
+    if (activeEl) {
+      const sb = faqSidebar.getBoundingClientRect();
+      const ae = activeEl.getBoundingClientRect();
+      if (ae.top < sb.top || ae.bottom > sb.bottom) {
+        activeEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
+    }
+
+    faqReadingPane.scrollTop = 0;
+
+    // On mobile (sidebar above reading pane), scroll the reading pane into view
+    // so the user sees the answer after tapping a question.
+    if (window.matchMedia('(max-width: 1024px)').matches) {
+      // Defer so the DOM updates first
+      setTimeout(function() {
+        faqReadingPane.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 50);
+    }
+  }
+
+  function performSearch(term) {
+    currentSearchTerm = term.toLowerCase().trim();
+
+    let visibleCount = 0;
+    let firstVisible = null;
+
+    Array.from(faqSidebar.querySelectorAll('.faq-question-item')).forEach(function(el) {
+      const qnum = el.dataset.qnum;
+      const item = allQuestions.find(function(x) { return x.num === qnum; });
+      if (!item) return;
+
+      const haystack = (item.num + ' ' + item.q + ' ' + item.a.replace(/<[^>]*>/g, ' ')).toLowerCase();
+      const matches = !currentSearchTerm || haystack.indexOf(currentSearchTerm) !== -1;
+
+      el.classList.toggle('hidden', !matches);
+      if (matches) {
+        visibleCount++;
+        if (!firstVisible) firstVisible = qnum;
+      }
+    });
+
+    sections.forEach(function(section) {
+      const group = faqSidebar.querySelector('[data-section-id="' + section.id + '"]');
+      if (!group) return;
+      const visibleItems = group.querySelectorAll('.faq-question-item:not(.hidden)');
+      group.style.display = (visibleItems.length === 0 && currentSearchTerm) ? 'none' : '';
+    });
+
+    if (currentSearchTerm) {
+      faqSearchStats.textContent = visibleCount + ' of 24 match';
+      faqSearchClear.classList.add('visible');
+    } else {
+      faqSearchStats.textContent = '24 questions · 5 sections';
+      faqSearchClear.classList.remove('visible');
+    }
+
+    if (firstVisible && currentSearchTerm) {
+      const activeItem = faqSidebar.querySelector('.faq-question-item[data-qnum="' + activeQNum + '"]');
+      if (activeItem && activeItem.classList.contains('hidden')) {
+        showQuestion(firstVisible);
+      }
+    }
+  }
+
+  faqSearchInput.addEventListener('input', function(e) {
+    performSearch(e.target.value);
+  });
+  faqSearchClear.addEventListener('click', function() {
+    faqSearchInput.value = '';
+    performSearch('');
+    faqSearchInput.focus();
+  });
+
+  function renderQuickReference() {
+    faqQrefGrid.innerHTML = '';
+    sections.forEach(function(section) {
+      const sh = document.createElement('div');
+      sh.className = 'qref-section-header';
+      sh.textContent = section.label;
+      faqQrefGrid.appendChild(sh);
+
+      section.questions.forEach(function(q) {
+        const card = document.createElement('div');
+        card.className = 'qref-card';
+
+        const tmp = document.createElement('div');
+        tmp.innerHTML = q.a;
+        let summary = tmp.textContent || '';
+        if (summary.length > 200) summary = summary.substring(0, 197) + '...';
+
+        card.innerHTML =
+          '<div class="qref-num">' + q.num + '</div>' +
+          '<div class="qref-q">' + q.q + '</div>' +
+          '<div class="qref-a">' + summary + '</div>';
+        faqQrefGrid.appendChild(card);
+      });
+    });
+  }
+
+  faqViewBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      const view = btn.dataset.view;
+      faqViewBtns.forEach(function(b) { b.classList.toggle('active', b === btn); });
+      if (view === 'quick') {
+        faqDetailedView.style.display = 'none';
+        faqQuickView.style.display = 'block';
+        if (!faqQrefGrid.hasChildNodes()) renderQuickReference();
+      } else {
+        faqDetailedView.style.display = 'grid';
+        faqQuickView.style.display = 'none';
+      }
+    });
+  });
+
+  renderFaqSidebar();
+  showQuestion('Q1');
+
+  // ============================================
+  // ============ VIDEO MODE ====================
+  // ============================================
+  // Chapter markers map to the official 4:33 application walkthrough.
+  // Timings are approximate - adjust the `t` values once you've watched
+  // the video and confirmed exact moments for each protocol step.
+  const chapters = [
+    { t: 0,   label: 'Introduction',          desc: 'Product overview and system claim' },
+    { t: 30,  label: 'Substrate preparation', desc: 'Cleaning the surface · wire brush, water jet, mopping' },
+    { t: 60,  label: 'Adhesive mixing',       desc: 'Tilefixo Type 2 · 2-3 min stir, 2 min mature' },
+    { t: 95,  label: 'First adhesive layer',  desc: '6mm notched trowel · minimum 3mm bed thickness' },
+    { t: 135, label: 'Membrane installation', desc: 'Cutting, laying, 5-10cm overlap, floater roll' },
+    { t: 180, label: 'Drain & pipe cuts',     desc: 'Membrane cut around penetrations · seal edges' },
+    { t: 215, label: 'Second adhesive layer', desc: 'On membrane top · before tile laying' },
+    { t: 245, label: 'Tile installation',     desc: '30-minute working window · perpendicular pressing' }
+  ];
+
+  const vimeoIframe = document.getElementById('vimeo-iframe');
+  const videoWrap = document.getElementById('video-player-wrap');
+  const chaptersGrid = document.getElementById('chapters-grid');
+
+  // Vimeo Player API helper - sends commands to the iframe via postMessage
+  function vimeoCommand(method, value) {
+    if (!vimeoIframe || !vimeoIframe.contentWindow) return;
+    const msg = value !== undefined
+      ? JSON.stringify({ method: method, value: value })
+      : JSON.stringify({ method: method });
+    vimeoIframe.contentWindow.postMessage(msg, '*');
+  }
+
+  function fmtTime(t) {
+    const m = Math.floor(t / 60);
+    const s = Math.floor(t % 60);
+    return m + ':' + (s < 10 ? '0' + s : s);
+  }
+
+  function renderChapters() {
+    chaptersGrid.innerHTML = '';
+    chapters.forEach(function(ch, idx) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'chapter-btn';
+      btn.dataset.chapterIdx = idx;
+      btn.innerHTML =
+        '<span class="chapter-time">' + fmtTime(ch.t) + '</span>' +
+        '<span class="chapter-text">' +
+          '<span class="chapter-label">' + ch.label + '</span>' +
+          '<span class="chapter-desc">' + ch.desc + '</span>' +
+        '</span>';
+      btn.addEventListener('click', function() {
+        // Seek the Vimeo player to the chapter timestamp, then play
+        vimeoCommand('setCurrentTime', ch.t);
+        vimeoCommand('play');
+        // Mark active
+        Array.from(chaptersGrid.children).forEach(function(c) { c.classList.remove('active'); });
+        btn.classList.add('active');
+      });
+      chaptersGrid.appendChild(btn);
+    });
+  }
+  renderChapters();
+
+  // Listen for Vimeo player time updates to highlight the active chapter
+  // Vimeo posts JSON messages back; we subscribe to 'timeupdate' once the
+  // iframe is ready.
+  let vimeoReady = false;
+  window.addEventListener('message', function(e) {
+    if (!e.data) return;
+    let data;
+    try { data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data; }
+    catch (err) { return; }
+
+    // When the player is ready, subscribe to timeupdate events
+    if (data.event === 'ready' && !vimeoReady) {
+      vimeoReady = true;
+      vimeoCommand('addEventListener', 'timeupdate');
+    }
+
+    // On every timeupdate, find which chapter we're in and highlight it
+    if (data.event === 'timeupdate' && data.data && typeof data.data.seconds === 'number') {
+      const t = data.data.seconds;
+      let activeIdx = 0;
+      for (let i = 0; i < chapters.length; i++) {
+        if (t >= chapters[i].t) activeIdx = i;
+        else break;
+      }
+      Array.from(chaptersGrid.children).forEach(function(c, i) {
+        c.classList.toggle('active', i === activeIdx);
+      });
+    }
+  });
+
+  // ============================================
+  // ====== KEYBOARD - SCOPED BY MODE ===========
+  // ============================================
+  document.addEventListener('keydown', function(e) {
+    // Don't trigger any keyboard shortcuts while typing in search input
+    if (e.target === faqSearchInput) {
+      // FAQ search is focused - only handle Escape to clear
+      if (e.key === 'Escape') {
+        faqSearchInput.value = '';
+        performSearch('');
+        faqSearchInput.blur();
+      }
+      return;
+    }
+
+    if (activeMode === 'vp') {
+      // Value Props keyboard - only when Universal tab is open
+      if (activeVpTab !== 'universal') return;
+      const key = e.key.toLowerCase();
+      if (key >= '1' && key <= '6') {
+        e.preventDefault();
+        const idx = parseInt(key, 10) - 1;
+        if (allMode) {
+          allMode = false;
+          showAllBtn.innerHTML = '<i class="ti ti-eye" aria-hidden="true" style="font-size: 14px;"></i>Show all evidence';
+        }
+        showDetail(idx);
+      } else if (key === 'a') {
+        e.preventDefault();
+        if (allMode) resetUniversal();
+        else showAll();
+      } else if (key === 'escape') {
+        e.preventDefault();
+        resetUniversal();
+      }
+    } else if (activeMode === 'faq') {
+      // FAQ keyboard
+      if (e.key === '/' || ((e.metaKey || e.ctrlKey) && e.key === 'k')) {
+        e.preventDefault();
+        faqSearchInput.focus();
+        return;
+      }
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        const visibleItems = Array.from(faqSidebar.querySelectorAll('.faq-question-item:not(.hidden)'));
+        const currentIdx = visibleItems.findIndex(function(el) { return el.dataset.qnum === activeQNum; });
+        if (currentIdx === -1) return;
+        e.preventDefault();
+        const nextIdx = e.key === 'ArrowDown'
+          ? Math.min(currentIdx + 1, visibleItems.length - 1)
+          : Math.max(currentIdx - 1, 0);
+        showQuestion(visibleItems[nextIdx].dataset.qnum);
+      }
+    }
+  });
+})();
+
+  // ============================================
+  // ======== FIELD PITCHES MODULE ===============
+  // ======== Updated: no dropdowns, full inline =
+  // ============================================
+  (function() {
+    const PITCH_DATA = {
+      architects: {
+        label: "Architects",
+        meta: "HINDI \u00B7 3 PITCHES",
+        language: "hindi",
+        pitches: [
+          {
+            id: "a1",
+            title: "Time Saved - 1 day vs 7-14 days",
+            text: "Sir/Ma\u2019am, sochiye - aaj traditional waterproofing mein 7 se 14 din lagte hain. Crack filling, ponding, first coat, curing, second coat, phir aur curing - har step ke beech wait. BWM mein yeh saari waiting gone. Ek din mein kaam khatam. Aapke project ka woh poora 2-week buffer aap baaki finishing kaamon ke liye use kar sakte ho. Faster execution, simpler application.",
+            en: "Sir/Ma\u2019am, think about it - traditional waterproofing today takes 7 to 14 days. Crack filling, ponding, first coat, curing, second coat, then more curing - waiting between every step. With BWM, all of that waiting is gone. Work finished in one day. That entire 2-week buffer on your project, you can now use for the rest of the finishing work. Faster execution, simpler application."
+          },
+          {
+            id: "a2",
+            title: "Warranty + Complete Home Solution",
+            text: "Sir/Ma\u2019am - this product comes with a 10-year manufacturer warranty, jo abhi market mein zyaada waterproofing products offer nahi karte. Aur is category mein iske jaisa kuch hai bhi nahi India me, toh aap apne client ke liye kuch naya laane wale pehle architect ban jaate ho. Aur same system bathroom, balcony, terrace - teeno jagah kaam karta hai, jahan abhi teen alag-alag traditional methods/brands use hote hain.",
+            en: "Sir/Ma\u2019am - this product comes with a 10-year manufacturer warranty, which most waterproofing products in the market don\u2019t offer right now. And there\u2019s nothing else like it in this category in India - so you become the first architect bringing something new to your client. And the same system works across bathroom, balcony, and terrace - all three places - where currently three different traditional methods or brands are being used."
+          },
+          {
+            id: "a3",
+            title: "Certified + Easy Steps",
+            text: "Sir/Ma\u2019am, ek interesting baat - UltraTech BWM EN 1928, EN 12311-2, aur ANSI A118.12 standards par certified hai. Yeh European technology hai jo bahar 10 saal se chal rahi hai - Europe aur US mein bathroom waterproofing ka yahi standard ban chuka hai. Ab finally India mein aayi hai. Aur best part - application itni simple hai ki koi bhi trained applicator kar sakta hai. Sirf chaar steps: adhesive, sheet, adhesive, tile.",
+            en: "Sir/Ma\u2019am, here\u2019s something interesting - UltraTech BWM is certified to EN 1928, EN 12311-2, and ANSI A118.12 standards. This is European technology that\u2019s been running abroad for 10 years - it\u2019s become the standard for bathroom waterproofing in Europe and the US. Now it\u2019s finally arrived in India. And the best part - the application is so simple that any trained applicator can do it. Just four steps: adhesive, sheet, adhesive, tile."
+          }
+        ]
+      },
+      tilers: {
+        label: "Tiling Applicators",
+        meta: "HINDI \u00B7 3 PITCHES",
+        language: "hindi",
+        pitches: [
+          {
+            id: "t1",
+            title: "Extra Source of Income + Bathroom Setter",
+            text: "Tile lagane ke liye aap toh site pe already hote ho - last-stage applicator aap hi ho. Tile ke neeche BWM bhi aap hi laga do - har bathroom mein ka extra \u2018Income\u2019, same site, same din. Aaj tak \u2018tile lagane wala\u2019 bole jaate the - kal se \u2018bathroom setter\u2019 ban jaaoge.",
+            en: "You\u2019re already on site to lay the tiles - you\u2019re the last-stage applicator anyway. Lay the BWM under the tile yourself - extra source of \u2018Income\u2019, same site, same day. Until today you were called \u2018the tile guy\u2019 - from tomorrow you become the bathroom setter."
+          },
+          {
+            id: "t2",
+            title: "Architect\u2019s Natural Pick",
+            text: "Architects ab BWM ko clients aur homeowners ke saamne pitch kar rahe hain. Jo tiler iska kaam jaanta hai, woh unke liye natural pick ban jaata hai. Ek baar BWM ka kaam mila, aur uske saath tiling, finishing - sab kaam usi tiler ko milta hai. Ek bar trust ban gaya, toh aage ke saare projects bhi aap ke.",
+            en: "Architects are now pitching BWM to clients and homeowners directly. The tiler who knows how to apply it becomes their natural pick. Once you get the BWM work, the tiling, finishing - all of it comes to the same tiler. Once trust is built, all the future projects come to you too."
+          },
+          {
+            id: "t3",
+            title: "Ease of Application",
+            text: "Tile jaise lagaate ho, waise hi - sirf chaar steps: adhesive, sheet, adhesive, tile. Joint pe sheet phati hui dekhi hogi pehle? BWM k woh problem solve karta hai. Ek pura bathroom, sirf aap, sirf ek din - plumber ka intezar nahi.",
+            en: "Same as how you already lay tiles - just four steps: adhesive, sheet, adhesive, tile. You\u2019ve seen sheet membranes split at the joint before? BWM solves that. One full bathroom, just you, just one day - no waiting for the plumber."
+          }
+        ]
+      },
+      wp: {
+        label: "Waterproofers",
+        meta: "HINDI \u00B7 2 PITCHES",
+        language: "hindi",
+        pitches: [
+          {
+            id: "w1",
+            title: "Repair Segment Unlock + Warranty",
+            text: "Repair ka kaam aap jaante ho - leakage aati hai, brick-bed coba todh ke andar tak jaana padta hai. Customer ka bathroom 10-15 din band, aur akhir mein bhi koi guarantee nahi de paate. BWM mein todhna nahi hai - upar se sandwich method laga do, ek din mein kaam khatam, aur 10 saal ki UltraTech warranty customer ko likh ke de do.",
+            en: "You know the repair work - leakage comes, you have to break the brick-bed coba to get inside. Customer\u2019s bathroom shut for 10-15 days, and at the end you can\u2019t even give a guarantee. With BWM there\u2019s no breaking - apply the sandwich method on top, work finished in one day, and you can give the customer a 10-year UltraTech warranty in writing. This is the repair segment unlock."
+          },
+          {
+            id: "w2",
+            title: "Territory Expansion",
+            text: "Bahar Europe mein, yeh sheet-membrane sirf bathroom ka product nahi hai - balcony, terrace - jahaan tile ho wahin lagta hai. Ek hi technique seekh ke aap pure ghar ka wet-area kaam le sakte ho. Abhi tak aap sirf bathroom karte the - kal se balcony, terrace - sab aapka territory. Ek skill, multiple zones, multiple billings.",
+            en: "Outside in Europe, this sheet-membrane isn\u2019t just a bathroom product - balcony, terrace - anywhere waterproofing is needed and a tile is there, it\u2019s used there. Learn one technique and you can take the entire home\u2019s wet-area work. Until now you were doing only bathroom - from tomorrow balcony, terrace - all your territory. One skill, multiple zones, multiple billings."
+          }
+        ]
+      },
+      cp: {
+        label: "Channel Partners",
+        meta: "HINDI \u00B7 2 PITCHES",
+        language: "hindi",
+        pitches: [
+          {
+            id: "c1",
+            title: "First-Mover Position",
+            text: "Sheet-membrane category Europe aur US mein 15-20 saal se chal rahi hai - wahan ki bathroom standard hai. India mein UltraTech pehla brand hai is European technology ko le ke aane wala. Jo CP pehle stock karega - woh apne shehar ka \u2018BWM dealer\u2019 ban jaayega. Premium architects/customers aapke counter aayega, naam aapka set ho jaayega.",
+            en: "The sheet-membrane category has been running in Europe for 15-20 years - it\u2019s the bathroom standard there. UltraTech is the first Indian brand bringing this European technology in. The CP who stocks first - becomes the \u2018BWM dealer\u2019 of his city. Premium customers will come to your counter, and your name gets locked in."
+          },
+          {
+            id: "c2",
+            title: "Portfolio Gap Fill",
+            text: "Aapke counter pe abhi jo bhi waterproofing products hain - liquid, cementitious - kisi pe customer ko likhit warranty nahi de paate. Aur premium customer ab YouTube dekh ke aata hai, kuch naya maangta hai, kuch alag. BWM woh dono gap fill karta hai - paper warranty bhi, aur naya sheet-format product bhi. Aap bolo customer ko - \u2018sirf BWM mein yeh paper milta hai, aur yeh European sheet technology hai jo abhi India mein launch hui hai.\u2019 Yeh aapke portfolio ka gap bharta hai, aur aapko baaki CP se stand out karta hai.",
+            en: "Whatever waterproofing products you have at the counter right now - liquid, cementitious - none give the customer a written warranty. And the premium customer now comes in after watching YouTube, asking for something new, something different. BWM fills both gaps - paper warranty and a new sheet-format product. You tell the customer - \u2018only BWM gives this paper, and this is European sheet technology just launched in India.\u2019 It fills the gap in your portfolio and makes you stand out from other CP."
+          }
+        ]
+      }
+    };
+
+    let activeSeg = 'architects';
+    let searchTerm = '';
+
+    // Restore last segment
+    try {
+      const saved = localStorage.getItem('bwm_pitch_seg');
+      if (saved && PITCH_DATA[saved]) activeSeg = saved;
+    } catch(e) {}
+
+    function escapeHTML(s) {
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+    function highlight(text, term) {
+      if (!term) return escapeHTML(text);
+      const esc = escapeHTML(text);
+      const re = new RegExp('(' + term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+      return esc.replace(re, '<mark class="pitch-mark">$1</mark>');
+    }
+
+    function renderList() {
+      const seg = PITCH_DATA[activeSeg];
+      const head = document.getElementById('pitch-section-head');
+      head.querySelector('.pitch-section-title').textContent = seg.label;
+      head.querySelector('.pitch-section-meta').textContent = seg.meta;
+
+      document.querySelectorAll('#pitch-segment-tabs .vp-tab').forEach(function(t) {
+        t.classList.toggle('active', t.dataset.pitchSeg === activeSeg);
+      });
+
+      const term = searchTerm.trim().toLowerCase();
+      let pitches = seg.pitches;
+      if (term) {
+        pitches = pitches.filter(function(p) {
+          return p.title.toLowerCase().indexOf(term) > -1
+              || p.text.toLowerCase().indexOf(term) > -1
+              || (p.en && p.en.toLowerCase().indexOf(term) > -1);
+        });
+      }
+
+      const list = document.getElementById('pitch-list');
+      if (pitches.length === 0) {
+        list.innerHTML = '<div class="pitch-empty">No pitches match \u201C' + escapeHTML(searchTerm) + '\u201D</div>';
+        return;
+      }
+
+      let html = '';
+      pitches.forEach(function(p, i) {
+        const num = String(i + 1).padStart(2, '0');
+        const lang = seg.language === 'english' ? 'english' : '';
+        // If search term matches ONLY inside the English translation (not title or Hindi text),
+        // expand the English block by default so the highlighted match is visible.
+        const enMatchOnly = term && p.en
+          && p.en.toLowerCase().indexOf(term) > -1
+          && p.title.toLowerCase().indexOf(term) === -1
+          && p.text.toLowerCase().indexOf(term) === -1;
+        html += '<div class="pitch-card-inline" data-id="' + p.id + '">';
+        html += '  <div class="pitch-card-head-inline">';
+        html += '    <span class="pitch-card-num">PITCH ' + num + '</span>';
+        html += '    <div class="pitch-card-actions">';
+        if (p.en) {
+          const btnActive = enMatchOnly ? ' active' : '';
+          const btnExpanded = enMatchOnly ? 'true' : 'false';
+          const btnLabel = enMatchOnly ? 'Hide English' : 'Translate';
+          html += '      <button type="button" class="pitch-btn pitch-btn-small' + btnActive + '" data-action="toggle-en" data-id="' + p.id + '" aria-expanded="' + btnExpanded + '"><i class="ti ti-language"></i><span class="translate-label">' + btnLabel + '</span></button>';
+        }
+        html += '      <button type="button" class="pitch-btn pitch-btn-small primary" data-action="copy" data-id="' + p.id + '"><i class="ti ti-copy"></i>Copy</button>';
+        html += '    </div>';
+        html += '  </div>';
+        html += '  <div class="pitch-card-title-inline">' + highlight(p.title, term) + '</div>';
+        html += '  <div class="pitch-quote ' + lang + '">' + highlight(p.text, term) + '</div>';
+        if (p.en) {
+          const hiddenAttr = enMatchOnly ? '' : ' hidden';
+          html += '  <div class="pitch-translation"' + hiddenAttr + '>';
+          html += '    <div class="pitch-translation-label">English Translation</div>';
+          html +=      highlight(p.en, term);
+          html += '  </div>';
+        }
+        html += '</div>';
+      });
+      list.innerHTML = html;
+    }
+
+    function findPitchById(id) {
+      const keys = Object.keys(PITCH_DATA);
+      for (let i = 0; i < keys.length; i++) {
+        const arr = PITCH_DATA[keys[i]].pitches;
+        for (let j = 0; j < arr.length; j++) {
+          if (arr[j].id === id) return arr[j];
+        }
+      }
+      return null;
+    }
+
+    function showToast(msg) {
+      let t = document.getElementById('pitch-toast');
+      if (!t) {
+        t = document.createElement('div');
+        t.id = 'pitch-toast';
+        t.className = 'pitch-toast';
+        document.body.appendChild(t);
+      }
+      t.innerHTML = '<i class="ti ti-check"></i>' + msg;
+      t.classList.add('show');
+      clearTimeout(window._pitchToastTimer);
+      window._pitchToastTimer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+    }
+
+    function copyText(text, btn) {
+      const fallback = function() {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); } catch(e) {}
+        document.body.removeChild(ta);
+      };
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).catch(fallback);
+        } else { fallback(); }
+      } catch(e) { fallback(); }
+
+      if (btn) {
+        const orig = btn.innerHTML;
+        btn.innerHTML = '<i class="ti ti-check"></i>Copied';
+        btn.classList.add('copied');
+        setTimeout(function() {
+          btn.innerHTML = orig;
+          btn.classList.remove('copied');
+        }, 1400);
+      }
+      showToast('Pitch copied');
+    }
+
+    document.getElementById('pitch-segment-tabs').addEventListener('click', function(e) {
+      const t = e.target.closest('.vp-tab');
+      if (!t) return;
+      activeSeg = t.dataset.pitchSeg;
+      try { localStorage.setItem('bwm_pitch_seg', activeSeg); } catch(err) {}
+      renderList();
+      window.scrollTo({ top: document.getElementById('pitch-section-head').offsetTop - 80, behavior: 'smooth' });
+    });
+
+    document.getElementById('pitch-list').addEventListener('click', function(e) {
+      // Copy button
+      const copyTarget = e.target.closest('[data-action="copy"]');
+      if (copyTarget) {
+        e.stopPropagation();
+        const id = copyTarget.dataset.id;
+        const p = findPitchById(id);
+        if (p) copyText(p.text, copyTarget);
+        return;
+      }
+      // Translate toggle
+      const toggleTarget = e.target.closest('[data-action="toggle-en"]');
+      if (toggleTarget) {
+        e.stopPropagation();
+        const card = toggleTarget.closest('.pitch-card-inline');
+        if (!card) return;
+        const trans = card.querySelector('.pitch-translation');
+        if (!trans) return;
+        const isHidden = trans.hasAttribute('hidden');
+        if (isHidden) {
+          trans.removeAttribute('hidden');
+          toggleTarget.setAttribute('aria-expanded', 'true');
+          toggleTarget.classList.add('active');
+          const lbl = toggleTarget.querySelector('.translate-label');
+          if (lbl) lbl.textContent = 'Hide English';
+        } else {
+          trans.setAttribute('hidden', '');
+          toggleTarget.setAttribute('aria-expanded', 'false');
+          toggleTarget.classList.remove('active');
+          const lbl = toggleTarget.querySelector('.translate-label');
+          if (lbl) lbl.textContent = 'Translate';
+        }
+      }
+    });
+
+    document.getElementById('pitch-search').addEventListener('input', function(e) {
+      searchTerm = e.target.value;
+      renderList();
+    });
+
+    renderList();
+  })();
+
+</script>
+
+<!-- ====== 3D SAMPLE LAB · THREE.JS MODEL ====== -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function() {
+  const canvas = document.getElementById('bwm-canvas');
+  if (!canvas || typeof THREE === 'undefined') return;
+
+  let scene, camera, renderer, sceneGroup, membraneGroup, puddle;
+  let droplets = [];
+  let rotY = 0.7, rotX = 0.25;
+  let targetRotY = 0.7, targetRotX = 0.25;
+  let isDragging = false, lastX = 0, lastY = 0;
+  let phase = 'idle';
+  let puddleScale = 0, puddleTarget = 0;
+  let liftAngle = 0, liftTarget = 0;
+  let autoRotate = true;
+  let initialized = false;
+
+  function init() {
+    if (initialized) return;
+    const wrap = canvas.parentElement;
+    const w = wrap.clientWidth;
+    const h = wrap.clientHeight;
+    // The canvas might be inside a hidden panel - if it has no size yet, defer init
+    if (w === 0 || h === 0) return;
+    initialized = true;
+
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(38, w / h, 0.1, 100);
+    camera.position.set(0, 1.6, 7.2);
+    camera.lookAt(0, 0, 0);
+
+    renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(w, h, true);
+
+    scene.add(new THREE.AmbientLight(0xffffff, 0.75));
+    const key = new THREE.DirectionalLight(0xffffff, 0.7);
+    key.position.set(5, 8, 4);
+    scene.add(key);
+    const fill = new THREE.DirectionalLight(0xb8d4f0, 0.35);
+    fill.position.set(-4, 3, -3);
+    scene.add(fill);
+    const rim = new THREE.DirectionalLight(0xffffff, 0.25);
+    rim.position.set(0, 2, -5);
+    scene.add(rim);
+
+    sceneGroup = new THREE.Group();
+    scene.add(sceneGroup);
+
+    buildSurface();
+    buildGlass();
+    buildMembrane();
+
+    setupControls();
+    animate();
+  }
+
+  function buildSurface() {
+    const surfaceGeo = new THREE.CircleGeometry(3.2, 64);
+    const surfaceMat = new THREE.MeshStandardMaterial({
+      color: 0xf5f3ee,
+      roughness: 0.9,
+      metalness: 0
+    });
+    const surface = new THREE.Mesh(surfaceGeo, surfaceMat);
+    surface.rotation.x = -Math.PI / 2;
+    surface.position.y = -2.5;
+    sceneGroup.add(surface);
+
+    const shadowGeo = new THREE.CircleGeometry(1.3, 48);
+    const shadowMat = new THREE.MeshBasicMaterial({
+      color: 0x000000,
+      transparent: true,
+      opacity: 0.12
+    });
+    const shadow = new THREE.Mesh(shadowGeo, shadowMat);
+    shadow.rotation.x = -Math.PI / 2;
+    shadow.position.y = -2.49;
+    sceneGroup.add(shadow);
+  }
+
+  function buildGlass() {
+    const topR = 1.0;
+    const botR = 0.82;
+    const height = 2.0;
+
+    const wallGeo = new THREE.CylinderGeometry(topR, botR, height, 48, 1, true);
+    const glassMat = new THREE.MeshPhongMaterial({
+      color: 0xeaf2f8,
+      transparent: true,
+      opacity: 0.22,
+      side: THREE.DoubleSide,
+      shininess: 100,
+      specular: 0xffffff
+    });
+    const wall = new THREE.Mesh(wallGeo, glassMat);
+    wall.position.y = -1.5;
+    sceneGroup.add(wall);
+
+    const innerWallGeo = new THREE.CylinderGeometry(topR * 0.96, botR * 0.96, height * 0.99, 48, 1, true);
+    const innerMat = new THREE.MeshPhongMaterial({
+      color: 0xeaf2f8,
+      transparent: true,
+      opacity: 0.18,
+      side: THREE.DoubleSide,
+      shininess: 80
+    });
+    const innerWall = new THREE.Mesh(innerWallGeo, innerMat);
+    innerWall.position.y = -1.5;
+    sceneGroup.add(innerWall);
+
+    const bottomGeo = new THREE.CircleGeometry(botR * 0.96, 48);
+    const bottom = new THREE.Mesh(bottomGeo, glassMat);
+    bottom.rotation.x = -Math.PI / 2;
+    bottom.position.y = -2.49;
+    sceneGroup.add(bottom);
+
+    const rimGeo = new THREE.TorusGeometry(topR, 0.025, 10, 48);
+    const rimMat = new THREE.MeshPhongMaterial({
+      color: 0xb8c8d4,
+      transparent: true,
+      opacity: 0.55,
+      shininess: 120,
+      specular: 0xffffff
+    });
+    const rim = new THREE.Mesh(rimGeo, rimMat);
+    rim.rotation.x = Math.PI / 2;
+    rim.position.y = -0.5;
+    sceneGroup.add(rim);
+
+    const baseRimGeo = new THREE.TorusGeometry(botR, 0.02, 8, 48);
+    const baseRim = new THREE.Mesh(baseRimGeo, rimMat);
+    baseRim.rotation.x = Math.PI / 2;
+    baseRim.position.y = -2.49;
+    sceneGroup.add(baseRim);
+
+    const highlightGeo = new THREE.PlaneGeometry(0.08, 1.5);
+    const highlightMat = new THREE.MeshBasicMaterial({
+      color: 0xffffff,
+      transparent: true,
+      opacity: 0.35
+    });
+    const highlight = new THREE.Mesh(highlightGeo, highlightMat);
+    highlight.position.set(-0.85, -1.3, 0.3);
+    highlight.rotation.y = 0.3;
+    sceneGroup.add(highlight);
+  }
+
+  function buildMembrane() {
+    membraneGroup = new THREE.Group();
+
+    const memGeo = new THREE.BoxGeometry(2.5, 0.035, 2.5);
+    const memMat = new THREE.MeshPhongMaterial({
+      color: 0x6b8aa8,
+      shininess: 25,
+      specular: 0x444444
+    });
+    const mem = new THREE.Mesh(memGeo, memMat);
+    membraneGroup.add(mem);
+
+    const stripeGeo = new THREE.BoxGeometry(2.5, 0.038, 0.12);
+    const stripeMat = new THREE.MeshPhongMaterial({
+      color: 0xF5C518,
+      shininess: 30
+    });
+    const stripe = new THREE.Mesh(stripeGeo, stripeMat);
+    stripe.position.set(0, 0, 1.15);
+    membraneGroup.add(stripe);
+
+    const edgeGeo = new THREE.EdgesGeometry(memGeo);
+    const edgeMat = new THREE.LineBasicMaterial({ color: 0x0D2B4E, linewidth: 1 });
+    const edges = new THREE.LineSegments(edgeGeo, edgeMat);
+    membraneGroup.add(edges);
+
+    const puddleGeo = new THREE.SphereGeometry(0.7, 32, 20);
+    puddleGeo.scale(1.1, 0.22, 1.1);
+    const puddleMat = new THREE.MeshPhongMaterial({
+      color: 0x3b82f6,
+      transparent: true,
+      opacity: 0.72,
+      shininess: 120,
+      specular: 0xffffff
+    });
+    puddle = new THREE.Mesh(puddleGeo, puddleMat);
+    puddle.position.y = 0.06;
+    puddle.scale.set(0, 0, 0);
+    membraneGroup.add(puddle);
+
+    const meniscusGeo = new THREE.TorusGeometry(0.65, 0.025, 8, 32);
+    const meniscusMat = new THREE.MeshPhongMaterial({
+      color: 0x60a5fa,
+      transparent: true,
+      opacity: 0.5,
+      shininess: 100
+    });
+    const meniscus = new THREE.Mesh(meniscusGeo, meniscusMat);
+    meniscus.rotation.x = Math.PI / 2;
+    meniscus.position.y = 0.08;
+    meniscus.scale.set(0, 0, 0);
+    puddle.userData.meniscus = meniscus;
+    membraneGroup.add(meniscus);
+
+    membraneGroup.position.y = -0.5;
+    sceneGroup.add(membraneGroup);
+  }
+
+  function spawnDroplet(delay) {
+    setTimeout(function() {
+      if (!sceneGroup) return;
+      const dropGeo = new THREE.SphereGeometry(0.07, 10, 10);
+      const dropMat = new THREE.MeshPhongMaterial({
+        color: 0x3b82f6,
+        transparent: true,
+        opacity: 0.85,
+        shininess: 100
+      });
+      const drop = new THREE.Mesh(dropGeo, dropMat);
+      drop.position.set(
+        (Math.random() - 0.5) * 0.5,
+        2.6,
+        (Math.random() - 0.5) * 0.5
+      );
+      drop.userData.vy = -0.02 - Math.random() * 0.02;
+      drop.userData.scaleY = 1;
+      sceneGroup.add(drop);
+      droplets.push(drop);
+    }, delay);
+  }
+
+  function pourWater() {
+    if (phase !== 'idle') return;
+    phase = 'pouring';
+    autoRotate = false;
+    document.getElementById('btn-pour').disabled = true;
+    document.getElementById('btn-lift').disabled = true;
+
+    for (let i = 0; i < 14; i++) {
+      spawnDroplet(i * 90);
+    }
+
+    setTimeout(function() {
+      puddleTarget = 1;
+      setTimeout(function() {
+        phase = 'idle';
+        document.getElementById('btn-pour').disabled = false;
+        document.getElementById('btn-lift').disabled = false;
+      }, 1200);
+    }, 600);
+  }
+
+  function liftMembrane() {
+    if (phase !== 'idle') return;
+    phase = 'lifting';
+    autoRotate = false;
+    document.getElementById('btn-pour').disabled = true;
+    document.getElementById('btn-lift').disabled = true;
+    liftTarget = 0.55;
+
+    setTimeout(function() {
+      phase = 'lifted';
+      document.getElementById('btn-pour').disabled = false;
+      document.getElementById('btn-lift').disabled = false;
+    }, 1500);
+  }
+
+  function reset() {
+    phase = 'idle';
+    puddleTarget = 0;
+    liftTarget = 0;
+    droplets.forEach(function(d) { sceneGroup.remove(d); });
+    droplets = [];
+    autoRotate = true;
+    document.getElementById('btn-pour').disabled = false;
+    document.getElementById('btn-lift').disabled = false;
+  }
+
+  function setupControls() {
+    canvas.addEventListener('mousedown', function(e) {
+      isDragging = true;
+      autoRotate = false;
+      lastX = e.clientX;
+      lastY = e.clientY;
+      canvas.style.cursor = 'grabbing';
+    });
+    window.addEventListener('mouseup', function() {
+      isDragging = false;
+      canvas.style.cursor = 'grab';
+    });
+    window.addEventListener('mousemove', function(e) {
+      if (!isDragging) return;
+      const dx = e.clientX - lastX;
+      const dy = e.clientY - lastY;
+      targetRotY += dx * 0.008;
+      targetRotX += dy * 0.006;
+      targetRotX = Math.max(-0.3, Math.min(0.9, targetRotX));
+      lastX = e.clientX;
+      lastY = e.clientY;
+    });
+
+    canvas.addEventListener('touchstart', function(e) {
+      if (e.touches.length === 1) {
+        isDragging = true;
+        autoRotate = false;
+        lastX = e.touches[0].clientX;
+        lastY = e.touches[0].clientY;
+      }
+    }, { passive: true });
+    window.addEventListener('touchend', function() { isDragging = false; });
+    // Use non-passive on the canvas so we can preventDefault to stop the page
+    // from scrolling while the user is rotating the 3D model.
+    canvas.addEventListener('touchmove', function(e) {
+      if (!isDragging || e.touches.length !== 1) return;
+      e.preventDefault();
+      const dx = e.touches[0].clientX - lastX;
+      const dy = e.touches[0].clientY - lastY;
+      targetRotY += dx * 0.008;
+      targetRotX += dy * 0.006;
+      targetRotX = Math.max(-0.3, Math.min(0.9, targetRotX));
+      lastX = e.touches[0].clientX;
+      lastY = e.touches[0].clientY;
+    }, { passive: false });
+
+    document.getElementById('btn-pour').addEventListener('click', pourWater);
+    document.getElementById('btn-lift').addEventListener('click', liftMembrane);
+    document.getElementById('btn-reset').addEventListener('click', reset);
+
+    window.addEventListener('resize', onResize);
+  }
+
+  function onResize() {
+    if (!renderer || !camera) return;
+    const wrap = canvas.parentElement;
+    const w = wrap.clientWidth;
+    const h = wrap.clientHeight;
+    if (w === 0 || h === 0) return;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h, true);
+  }
+
+  function animate() {
+    requestAnimationFrame(animate);
+
+    if (autoRotate && !isDragging) {
+      targetRotY += 0.0025;
+    }
+
+    rotY += (targetRotY - rotY) * 0.1;
+    rotX += (targetRotX - rotX) * 0.1;
+    sceneGroup.rotation.y = rotY;
+    sceneGroup.rotation.x = rotX;
+
+    puddleScale += (puddleTarget - puddleScale) * 0.08;
+    if (puddle) {
+      puddle.scale.set(puddleScale, puddleScale, puddleScale);
+      if (puddle.userData.meniscus) {
+        puddle.userData.meniscus.scale.set(puddleScale, puddleScale, puddleScale);
+      }
+    }
+
+    liftAngle += (liftTarget - liftAngle) * 0.06;
+    if (membraneGroup) {
+      membraneGroup.rotation.z = -liftAngle;
+      membraneGroup.position.x = liftAngle * 2.0;
+      membraneGroup.position.y = -0.5 + liftAngle * 1.1;
+    }
+
+    for (let i = droplets.length - 1; i >= 0; i--) {
+      const d = droplets[i];
+      d.userData.vy -= 0.0025;
+      d.position.y += d.userData.vy;
+      d.userData.scaleY = Math.max(0.4, 1 + d.userData.vy * 10);
+      d.scale.y = d.userData.scaleY;
+      if (d.position.y < -0.42) {
+        sceneGroup.remove(d);
+        droplets.splice(i, 1);
+      }
+    }
+
+    renderer.render(scene, camera);
+  }
+
+  // Init when the demo tab becomes visible (canvas has size only when its panel is `display: block`).
+  // Listen for clicks on the demo mode button.
+  const demoModeBtn = document.querySelector('button[data-mode="demo"]');
+  if (demoModeBtn) {
+    demoModeBtn.addEventListener('click', function() {
+      // Defer to next frame so the panel is rendered before measuring
+      setTimeout(function() {
+        if (!initialized) {
+          init();
+        } else {
+          onResize();
+        }
+      }, 60);
+      // A second pass after the browser has fully laid out - catches the case
+      // where the canvas wrap was hidden when init ran (e.g. on mobile load)
+      setTimeout(function() {
+        if (initialized) onResize();
+      }, 250);
+    });
+  }
+  // Resize when the window resizes (e.g. orientation change on mobile)
+  window.addEventListener('resize', function() {
+    if (initialized) onResize();
+  });
+  // If the demo panel happens to be the default active mode, also try init on load
+  if (document.getElementById('mode-demo') && document.getElementById('mode-demo').classList.contains('active')) {
+    init();
+  }
+})();
+</script>
+
+</body>
+</html>
